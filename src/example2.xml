@@ -1,0 +1,15 @@
+<sentence>
+    <text>I</text>
+    <maybe>really</maybe>
+    <either>
+        <this id="potato">like</this>
+        <or>love</or>
+        <or>dislike</or>
+        <or>hate</or>
+    </either>
+    <either>
+        <this>Tomatoes</this>
+        <or>Potatoes</or>
+    </either>
+    <data key="side|staple"></data>
+</sentence>

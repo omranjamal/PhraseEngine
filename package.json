@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "xmldom": "^0.1.27"
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.26",
+    "@types/xmldom": "^0.1.29",
+    "typescript": "^2.5.2"
+  }
+}
