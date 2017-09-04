@@ -1,0 +1,1 @@
+browserify ./scripts/try.js -t babelify --outfile try.js
