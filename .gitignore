@@ -2,3 +2,5 @@
 /yarn.lock
 /node_modules
 /.vscode/
+/.sass-cache
+/_site

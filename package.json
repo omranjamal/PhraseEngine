@@ -25,11 +25,9 @@
     "phrase-engine": "./dist/cli.js"
   },
   "license": "MIT",
-  "engines": {
-    "node": ">=8.0"
-  },
+  "main": "dist/index.js",
   "scripts": {
     "prepublishOnly": "node ./node_modules/bin/tsc"
   },
-  "version": "0.1.0"
+  "version": "0.1.1"
 }
