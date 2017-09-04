@@ -1,4 +1,3 @@
-/src/
 /yarn.lock
 /node_modules
 /.vscode/
@@ -7,3 +6,4 @@
 /_sass
 /_posts
 /.npmignore
+/dist_scripts
