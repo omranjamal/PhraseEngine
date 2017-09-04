@@ -12,6 +12,8 @@
     "react": "^15.6.1",
     "react-ace": "^5.2.0",
     "react-dom": "^15.6.1",
+    "ts-loader": "^2.3.4",
+    "typescript": "^2.5.2",
     "uglifyjs-webpack-plugin": "^0.4.6",
     "webpack": "^3.5.5"
   }
