@@ -1,11 +1,11 @@
-require("babel-core/register");
-require("babel-polyfill");
+// import "babel-core/register";
+// import "babel-polyfill";
 
-const PhraseEngine = require('phrase-engine').default;
-const engine = PhraseEngine.compile(`
-    <sentence>
-        <maybe>POTATO</maybe>
-    </sentence>
-`);
+// import React from 'react';
+// import { render } from 'react-dom';
+import PhraseEngine from 'phrase-engine';
 
-console.log('x', engine.random({}));
+const engine = PhraseEngine.compile('<sentence><maybe>Potato</maybe></sentence>');
+
+
+const try_window = document.getElementsByClassName('try-window')[0];
