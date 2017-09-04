@@ -44,18 +44,6 @@ export abstract class PhraseNode {
     }
 
     protected next(): PhraseNode {
-        !this.__next_node && (this.__next_node = new (class extends PhraseNode {
-            protected validateNodeName(name: string): boolean { return true };
-            public init(root: Node, packet: InitPacketInterface): void {};
-            public eval(packet: EvalPacketInterface, branch?: number): EvalPacketInterface {
-                return packet;
-            };
-        })('', {
-            ignore_spaces: [],
-            next_stack: [],
-            id_map: {}
-        }));
-
         return this.__next_node;
     }
 }

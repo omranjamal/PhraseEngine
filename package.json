@@ -31,5 +31,5 @@
   "scripts": {
     "prepublishOnly": "node ./node_modules/bin/tsc"
   },
-  "version": "0.1.2"
+  "version": "0.1.7"
 }

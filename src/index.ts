@@ -1,6 +1,7 @@
 import { DOMParser } from 'xmldom';
 import { SentenceNode } from "./Nodes/SentenceNode";
 import { EvalPacketInterface } from "./Node";
+import makeTerminus from './makeTerminus';
 
 export interface DataInterface {
     [key: string]: any
@@ -19,7 +20,7 @@ export default class PhraseEngine {
                 (new DOMParser).parseFromString(xml).documentElement,
                 {
                     ignore_spaces: [false],
-                    next_stack: [],
+                    next_stack: [makeTerminus()],
                     id_map: {}
                 }
             )
