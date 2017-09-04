@@ -6,7 +6,9 @@
     "url": "https://github.com/omranjamal"
   },
   "keywords": [
-    "langauge", "DSL", "internationalization"
+    "langauge",
+    "DSL",
+    "internationalization"
   ],
   "repository": {
     "type": "git",
@@ -29,5 +31,5 @@
   "scripts": {
     "prepublishOnly": "node ./node_modules/bin/tsc"
   },
-  "version": "0.1.1"
+  "version": "0.1.2"
 }

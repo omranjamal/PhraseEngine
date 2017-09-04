@@ -1,5 +1,9 @@
 /src/
-/.vscode/
-/node_modules/
-/tsconfig.json
 /yarn.lock
+/node_modules
+/.vscode/
+/.sass-cache
+/_site
+/_sass
+/_posts
+/.npmignore
