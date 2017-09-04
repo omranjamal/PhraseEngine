@@ -30,11 +30,11 @@ export class DataNode extends RefableNode {
         this.registararGenerate(root);
     }
 
-    public eval(packet: EvalPacketInterface, branch?: number): void {
+    public eval(packet: EvalPacketInterface, branch?: number): EvalPacketInterface {
         this.registerRender(packet);
         
         packet.sentence_components.push(this.__evaulator(packet));
-        this.next().eval(packet);
+        return this.next().eval(packet);
     }
 
     public *gen(packet: EvalPacketInterface): any {

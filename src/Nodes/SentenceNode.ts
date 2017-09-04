@@ -43,8 +43,8 @@ export class SentenceNode extends PhraseNode {
         this.setNextNode(text.call(this, root, packet, textSupport));
     }
 
-    public eval(packet: EvalPacketInterface, branch?: number): void {
-        this.next().eval(packet);
+    public eval(packet: EvalPacketInterface, branch?: number): EvalPacketInterface {
+        return this.next().eval(packet);
     }
 
     public *gen(packet: EvalPacketInterface): any {

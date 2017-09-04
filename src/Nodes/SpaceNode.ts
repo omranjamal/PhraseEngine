@@ -10,10 +10,10 @@ export class SpaceNode extends PhraseNode {
         this.setNextNode(peek(packet.next_stack));
     }
 
-    public eval(packet: EvalPacketInterface, branch?: number): void {
+    public eval(packet: EvalPacketInterface, branch?: number): EvalPacketInterface {
         
         packet.sentence_components.push(" ");
-        this.next().eval(packet);
+        return this.next().eval(packet);
     }
 
     public *gen(packet: EvalPacketInterface): any {

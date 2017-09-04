@@ -38,9 +38,9 @@ export class EitherNode extends RefableNode {
         this.registararGenerate(root);
     }
 
-    public eval(packet: EvalPacketInterface, branch: number = Math.round(Math.random()*(2**16))): void {
+    public eval(packet: EvalPacketInterface, branch: number = Math.round(Math.random() * (2 ** 16))): EvalPacketInterface {
         this.registerRender(packet);
-        this.__routes[branch%this.__routes.length].eval(packet);
+        return this.__routes[branch%this.__routes.length].eval(packet);
     }
 
     public *gen(packet: EvalPacketInterface): any {

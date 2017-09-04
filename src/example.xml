@@ -2,8 +2,8 @@
     <either>
         <this id="they">They</this>
         <or id="i">I</or>
-        <or class="singular_third" id="he">He</or>
-        <or class="singular_third" id="she">She</or>
+        <or id="he">He</or>
+        <or id="she">She</or>
     </either>
     <unless condition="start">also</unless>
     <maybe>really</maybe>
@@ -11,8 +11,9 @@
         <either id="affection">
             <this>like</this>
             <or>love</or>
+            <or>adore</or>
         </either>
-        <if condition=".singular_third">s</if>
+        <if condition="#she | #he">s</if>
     </spaceless>
     <data key="subject"></data>.
     <text>

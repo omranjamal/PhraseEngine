@@ -43,8 +43,8 @@ export class RefNode extends PhraseNode {
         this.setNextNode(support[node.nodeName](node, packet));
     }
 
-    public eval(packet: EvalPacketInterface, branch?: number): void {
-        this.next().eval(packet);
+    public eval(packet: EvalPacketInterface, branch?: number): EvalPacketInterface {
+        return this.next().eval(packet);
     }
     
     public *gen(packet: EvalPacketInterface): any {

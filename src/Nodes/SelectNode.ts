@@ -68,7 +68,7 @@ export class SelectNode extends RefableNode {
         this.registararGenerate(root);
     }
 
-    public eval(packet: EvalPacketInterface, branch?: number): void {
+    public eval(packet: EvalPacketInterface, branch?: number): EvalPacketInterface {
         this.registerRender(packet);
         
         if (!(this.__key in packet.data)) {
@@ -78,9 +78,9 @@ export class SelectNode extends RefableNode {
         const val = packet.data[this.__key];
 
         if (val in this.__map) {
-            this.__map[val].eval(packet);
+            return this.__map[val].eval(packet);
         } else {
-            this.__default.eval(packet);
+            return this.__default.eval(packet);
         }
     }
 

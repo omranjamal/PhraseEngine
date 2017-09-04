@@ -13,10 +13,10 @@ export class OrNode extends RefableNode {
         this.registararGenerate(root);
     }
 
-    public eval(packet: EvalPacketInterface, branch?: number): void {
+    public eval(packet: EvalPacketInterface, branch?: number): EvalPacketInterface {
         this.registerRender(packet);
         
-        this.next().eval(packet);
+        return this.next().eval(packet);
     }
 
     public *gen(packet: EvalPacketInterface): any {

@@ -25,7 +25,7 @@ export abstract class PhraseNode {
 
     protected abstract validateNodeName(name: string): boolean;
     public abstract init(root: Node, packet: InitPacketInterface): void;
-    public abstract eval(packet: EvalPacketInterface, branch?: number): void;
+    public abstract eval(packet: EvalPacketInterface, branch?: number): EvalPacketInterface;
 
     public *gen(packet: EvalPacketInterface): any {
         yield packet;
@@ -47,7 +47,9 @@ export abstract class PhraseNode {
         !this.__next_node && (this.__next_node = new (class extends PhraseNode {
             protected validateNodeName(name: string): boolean { return true };
             public init(root: Node, packet: InitPacketInterface): void {};
-            public eval(packet: EvalPacketInterface, branch?: number): void {};
+            public eval(packet: EvalPacketInterface, branch?: number): EvalPacketInterface {
+                return packet;
+            };
         })('', {
             ignore_spaces: [],
             next_stack: [],

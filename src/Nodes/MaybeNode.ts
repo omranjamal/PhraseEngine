@@ -18,10 +18,10 @@ export class MaybeNode extends RefableNode {
         this.registararGenerate(root);
     }
 
-    public eval(packet: EvalPacketInterface, branch: number = Math.round(Math.random()*453745)): void {
+    public eval(packet: EvalPacketInterface, branch: number = Math.round(Math.random() * 453745)): EvalPacketInterface {
         !!(branch&1) && this.registerRender(packet);
         
-        [
+        return [
             this.__skip,
             this.__next_node
         ][branch&1].eval(packet);
@@ -29,9 +29,9 @@ export class MaybeNode extends RefableNode {
 
     public *gen(packet: EvalPacketInterface): any {
         this.registerRender(packet);
-        yield* this.__skip.gen(packet);
+        yield* this.next().gen(packet);
         this.deregisterRender(packet);
 
-        yield* this.next().gen(packet);
+        yield* this.__skip.gen(packet);
     }
 }

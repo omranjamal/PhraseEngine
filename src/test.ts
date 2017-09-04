@@ -32,4 +32,6 @@ for (let s of sentence.gen(x)) {
     console.log(s.sentence_components.join('').replace(/\s+/ig, ' ').trim());
 }
 
+// console.log(sentence.eval(x).sentence_components.join('').replace(/\s+/ig, ' ').trim());
+
 // console.log(JSON.stringify(sentence, null, 4));

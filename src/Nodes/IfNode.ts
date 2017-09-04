@@ -22,11 +22,19 @@ export class IfNode extends RefableNode {
         while (!!cur) {
             if (isOperator(cur)) {
                 if (cur === '!') {
-                    e_stack.push(!e_stack.pop())
+                    let a = e_stack.pop();
+                    e_stack.push((!a));
+
                 } else if (cur === '&') {
-                    e_stack.push(e_stack.pop() && e_stack.pop())
+                    let a = e_stack.pop();
+                    let b = e_stack.pop();
+
+                    e_stack.push((a && b));
                 } else if (cur === '|') {
-                    e_stack.push(e_stack.pop() || e_stack.pop())
+                    let a = e_stack.pop();
+                    let b = e_stack.pop();
+
+                    e_stack.push((a || b));
                 }
             } else {
                 e_stack.push((() => {
@@ -103,10 +111,10 @@ export class IfNode extends RefableNode {
         this.registararGenerate(root);
     }
 
-    public eval(packet: EvalPacketInterface, branch?: number): void {
+    public eval(packet: EvalPacketInterface, branch?: number): EvalPacketInterface {
         this.registerRender(packet);
         
-        this.evalLogic(packet)
+        return this.evalLogic(packet)
             ? this.__then.eval(packet)
             : this.__else.eval(packet)
     }
