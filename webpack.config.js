@@ -8,15 +8,36 @@ module.exports = {
         path: path.resolve(__dirname, 'dist_scripts'),
         filename: 'try.bundle.js'
     },
+    resolve: {
+        extensions: ['.ts', '.js'],
+        alias: {
+            "react": "preact-compat",
+            "react-dom": "preact-compat",
+            'create-react-class': "preact-compat/lib/create-react-class"
+        }
+    },
     module: {
         loaders: [
             {
                 test: /\.js$/,
-                loader: 'babel-loader'
+                loader: 'babel-loader',
+                exclude: [
+                    path.resolve(__dirname, "node_modules")
+                ],
+                include: [
+                    path.resolve(__dirname, "scripts")
+                ]
             },
             {
                 test: /\.ts$/,
-                loaders: ['babel-loader', 'ts-loader']
+                loaders: ['babel-loader', 'ts-loader'],
+                include: [
+                    path.resolve(__dirname, "node_modules/phrase-engine")
+                ]
+            },
+            {
+                test: /\.css$/,
+                loaders: ['css-loader']
             }
         ]
     },
@@ -30,6 +51,6 @@ module.exports = {
         //         NODE_ENV: JSON.stringify('production')
         //     }
         // }),
-        new UglifyJSPlugin()
+        // new UglifyJSPlugin()
     ]
 };

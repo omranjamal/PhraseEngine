@@ -1,7 +1,93 @@
+--- 
 ---
----
+$side-bar-size: 4em;
+$top-bar-size: 0;
+$top-bar-color: #272822;
+$side-bar-color: #272822;
 
-html, body {
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+body, html {
     padding: 0;
     margin: 0;
+}
+
+.try-window, .app, .editor, .editors, .controls, .editor-container, nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+}
+
+nav {
+    height: $top-bar-size;
+    background: $top-bar-color;
+}
+
+.controls {
+    top: $top-bar-size;
+    height: calc(100% - #{$top-bar-size});
+    width: $side-bar-size;
+    background: $side-bar-color;
+
+    a {
+        cursor: pointer;
+        display: block;
+        width: 100%;
+        padding: 1.5em 0;
+        color: white;
+        text-align: center;
+        border-left: 4px solid $side-bar-color;
+        font-size: 0.8em;
+        
+
+        &:hover {
+            $lighter: lighten($side-bar-color, 10%);
+            background: $lighter;
+            border-left: 4px solid $lighter;
+        }
+
+        &.active-link {
+            border-left: 4px solid #edb438;
+            // background: darken($side-bar-color, 5%);
+            background: #2F3129;     
+        }
+
+        &.compile-link {
+            $color: #80BA36;
+
+            margin-bottom: 2em;
+
+            border-left: 4px solid $color;
+            background: $color;
+
+            &:hover {
+                $lighter: lighten($color, 10%);
+                background: $lighter;
+                border-left: 4px solid $lighter;
+            }
+        }
+    }
+}
+
+.editors {
+    top: $top-bar-size;
+    height: calc(100% - #{$top-bar-size});
+    left: $side-bar-size;
+    width: calc(50% - #{$side-bar-size});
+}
+
+.editor-container {
+    &.hidden {
+        display: none;
+    }
+}
+
+.editor {
+    font-size: 1.2em;
 }

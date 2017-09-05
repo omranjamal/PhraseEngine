@@ -1,14 +1,9 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
         "target": "ES6",
         "noImplicitAny": true,
         "removeComments": true,
         "preserveConstEnums": true,
-        "sourceMap": true,
-        "alwaysStrict": true,
-        "declaration": true,
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true
+        "sourceMap": true
     }
 }
