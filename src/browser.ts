@@ -1,3 +1,4 @@
+import { VarsPacket } from './Node';
 import { SentenceNode } from "./Nodes/SentenceNode";
 import { EvalPacketInterface } from "./Node";
 import makeTerminus from './makeTerminus';
@@ -13,14 +14,19 @@ export default class PhraseEngine {
         this.__sentence = sentence;
     }
 
+    public static getDOMParser(): { new(): DOMParser } {
+        return DOMParser;
+    }
+
     public static compile(xml: string): PhraseEngine {
         return new PhraseEngine(
             new SentenceNode(
-                (new DOMParser).parseFromString(xml, 'text/xml').documentElement,
+                (new (this.getDOMParser())).parseFromString(xml, 'text/xml').documentElement,
                 {
                     ignore_spaces: [false],
                     next_stack: [makeTerminus()],
-                    id_map: {}
+                    id_map: {},
+                    node_count: 0
                 }
             )
         );
@@ -37,15 +43,15 @@ export default class PhraseEngine {
 
     protected makePresentable(components: string[]) {
         return components
-                    .join('')
-                    .replace(/\s+/ig, ' ')
-                    .replace(/\r/ig, '')
-                    .replace(/\s+\n/ig, "\n")
-                    .replace(/\n\s+/ig, "\n")
-                    .trim()
+            .join('')
+            .replace(/\s+/ig, ' ')
+            .replace(/\r/ig, '')
+            .replace(/\s+\n/ig, "\n")
+            .replace(/\n\s+/ig, "\n")
+            .trim()
     }
 
-    public random(data: DataInterface) {
+    public random(data: DataInterface = {}) {
         return this.makePresentable(
             this.__sentence.eval(
                 this.makeEvalPacket(data)
@@ -53,7 +59,7 @@ export default class PhraseEngine {
         );
     }
 
-    public * iterate(data: DataInterface): IterableIterator<string> {
+    public * iterate(data: DataInterface = {}): IterableIterator<string> {
         const iterator: IterableIterator<EvalPacketInterface> = this.__sentence.gen(
             this.makeEvalPacket(data)
         );
@@ -61,5 +67,15 @@ export default class PhraseEngine {
         for (let pack of iterator) {
             yield this.makePresentable(pack.sentence_components);
         }
+    }
+
+    public vars(): VarsPacket {
+        return this.__sentence.vars({
+            vars: {}
+        });
+    }
+
+    public count(data: DataInterface = {}): number {
+        return this.__sentence.count(this.makeEvalPacket(data));
     }
 }

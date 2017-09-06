@@ -50,4 +50,10 @@ export class SentenceNode extends PhraseNode {
     public *gen(packet: EvalPacketInterface): any {
         yield* this.next().gen(packet);
     }
+
+    public count(e_packet: EvalPacketInterface): number {
+        const ret = this.next().count(e_packet);
+
+        return ret;
+    }
 }

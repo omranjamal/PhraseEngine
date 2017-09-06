@@ -1,4 +1,4 @@
-import { PhraseNode, InitPacketInterface, EvalPacketInterface } from '../Node';
+import { PhraseNode, InitPacketInterface, EvalPacketInterface, VarsPacket } from '../Node';
 import { RefableNode } from '../RefableNode';
 import peek from '../peek';
 import text from '../text';
@@ -33,5 +33,28 @@ export class MaybeNode extends RefableNode {
         this.deregisterRender(packet);
 
         yield* this.__skip.gen(packet);
+    }
+
+    public count(packet: EvalPacketInterface): number {
+        let ret: number;
+
+        this.registerRender(packet);
+        ret = this.next().count(packet);
+        this.deregisterRender(packet);
+
+        ret += this.__skip.count(packet);
+
+        return ret;
+    }
+
+    public vars(packet: VarsPacket): VarsPacket {
+        if (!this.__vared) {
+            this.__next_node.vars(packet);
+            this.__skip.vars(packet);
+
+            this.__vared = true;
+        }
+
+        return packet;
     }
 }

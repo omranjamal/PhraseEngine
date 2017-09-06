@@ -27,4 +27,12 @@ export class ThenNode extends RefableNode {
         yield* this.next().gen(packet);
         this.deregisterRender(packet);
     }
+
+    public count(e_packet: EvalPacketInterface): number {
+        this.registerRender(e_packet);
+        const ret = this.next().count(e_packet);
+        this.registerRender(e_packet);
+
+        return ret;
+    }
 }

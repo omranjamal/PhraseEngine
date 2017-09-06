@@ -26,4 +26,12 @@ export class OrNode extends RefableNode {
 
         this.deregisterRender(packet);
     }
+
+    public count(e_packet: EvalPacketInterface): number {
+        this.registerRender(e_packet);
+        const ret = this.next().count(e_packet);
+        this.registerRender(e_packet);
+
+        return ret;
+    }
 }

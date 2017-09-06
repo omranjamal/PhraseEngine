@@ -1,4 +1,4 @@
-import { PhraseNode, InitPacketInterface, EvalPacketInterface } from '../Node';
+import { PhraseNode, InitPacketInterface, EvalPacketInterface, VarsPacket } from '../Node';
 import { RefableNode } from '../RefableNode';
 import peek from '../peek';
 import mapFilter from '../mapFilter';
@@ -35,6 +35,10 @@ export class EitherNode extends RefableNode {
             this.__routes = routes;
         }
 
+        if (routes.length === 0) {
+            throw new Error(`Either should always have atleast one path.`);
+        }
+
         this.registararGenerate(root);
     }
 
@@ -51,5 +55,29 @@ export class EitherNode extends RefableNode {
         }
 
         this.deregisterRender(packet);
+    }
+
+    public vars(packet: VarsPacket): VarsPacket {
+        if (!this.__vared) {
+            this.__routes.forEach(route => {
+                route.vars(packet);
+            });
+
+            this.__vared = true;
+        }
+
+        return packet;
+    }
+
+    public count(e_packet: EvalPacketInterface): number {
+        this.registerRender(e_packet);
+
+        const ret = this.__routes.map(route => {
+            return route.count(e_packet);
+        }).reduce((a, b) => a+b);
+
+        this.deregisterRender(e_packet);
+
+        return ret;
     }
 }

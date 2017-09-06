@@ -1,4 +1,4 @@
-import { PhraseNode, InitPacketInterface, EvalPacketInterface } from '../Node';
+import { PhraseNode, InitPacketInterface, EvalPacketInterface, VarsPacket } from '../Node';
 import { RefableNode } from '../RefableNode';
 import peek from '../peek';
 import mapFilter from '../mapFilter';
@@ -22,6 +22,10 @@ export class SelectNode extends RefableNode {
         }
 
         this.__key = (<Element>root).getAttribute('key');
+
+        if (this.__key.trim().length === 0) {
+            throw new Error(`Select must have non empty key`);
+        }
 
         let map: {[key: string]: PhraseNode} = {};
         const support = mapFilter(factories, ['for']);
@@ -62,6 +66,10 @@ export class SelectNode extends RefableNode {
         if (!this.__default) {
             this.__default = peek(packet.next_stack);
         }
+        
+        if (Object.keys(map).length === 0) {
+            throw new Error(`Select must have atleast one for.`);
+        }
 
         this.__map = map;
 
@@ -101,4 +109,41 @@ export class SelectNode extends RefableNode {
 
         this.deregisterRender(packet);
     }
+
+    public vars(packet: VarsPacket): VarsPacket {
+        if (!this.__vared) {
+            packet.vars[this.__key] = packet.vars[this.__key] || [];
+            packet.vars[this.__key].push({
+                type: 'enum',
+                values: Object.keys(this.__map)
+            });
+
+            this.__vared = true;
+        }
+
+        return packet;
+    }
+
+    public count(packet: EvalPacketInterface): number {
+        let ret: number;
+
+        this.registerRender(packet);
+        
+        if (!(this.__key in packet.data)) {
+            throw new Error(`key "${this.__key}" not found in data.`);
+        }
+
+        const val = packet.data[this.__key];
+
+        if (val in this.__map) {
+            ret = this.__map[val].count(packet);
+        } else {
+            ret = this.__default.count(packet);
+        }
+
+        this.registerRender(packet);
+
+        return ret;
+    }
+
 }

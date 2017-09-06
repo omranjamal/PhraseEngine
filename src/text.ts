@@ -4,6 +4,11 @@ import peek from './peek';
 
 export default function (root: Node, packet: InitPacketInterface, support: { [key: string]: (root: Node, packet: InitPacketInterface) => PhraseNode}) {
     const length = root.childNodes.length;
+
+    if (length === 0) {
+        return peek(packet.next_stack);
+    }
+
     let last_node: PhraseNode;
     let name = root.childNodes.item(length - 1).nodeName;
 

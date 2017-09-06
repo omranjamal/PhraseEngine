@@ -8,3 +8,4 @@
 /.npmignore
 /dist_scripts
 /tsconfig.json
+/test

@@ -1,66 +1,24 @@
-import { DOMParser } from 'xmldom';
+import Browser from './browser';
 import { SentenceNode } from "./Nodes/SentenceNode";
-import { EvalPacketInterface } from "./Node";
+import { DOMParser as DP } from 'xmldom';
 import makeTerminus from './makeTerminus';
 
-export interface DataInterface {
-    [key: string]: any
-}
-
-export default class PhraseEngine {
-    protected __sentence: SentenceNode;
-
-    public constructor(sentence: SentenceNode) {
-        this.__sentence = sentence;
+export default class PhraseEngine extends Browser {
+    public static getDOMParser(): { new(): DP } {
+        return DP;
     }
 
     public static compile(xml: string): PhraseEngine {
         return new PhraseEngine(
             new SentenceNode(
-                (new DOMParser).parseFromString(xml).documentElement,
+                (new (this.getDOMParser())).parseFromString(xml, 'text/xml').documentElement,
                 {
                     ignore_spaces: [false],
                     next_stack: [makeTerminus()],
-                    id_map: {}
+                    id_map: {},
+                    node_count: 0
                 }
             )
         );
-    }
-
-    protected makeEvalPacket(data: DataInterface): EvalPacketInterface {
-        return {
-            data,
-            sentence_components: <Array<string>>[],
-            id_render_map: {},
-            class_render_map: {}
-        }
-    }
-
-    protected makePresentable(components: string[]) {
-        return components
-                    .join('')
-                    .replace(/\s+/ig, ' ')
-                    .replace(/\r/ig, '')
-                    .replace(/\s+\n/ig, "\n")
-                    .replace(/\n\s+/ig, "\n")
-                    .trim()
-    }
-
-    public random(data: DataInterface) {
-        return this.makePresentable(
-            this.__sentence.eval(
-                this.makeEvalPacket(data)
-            ).sentence_components
-        );
-    }
-
-    public * iterate(data: DataInterface): IterableIterator<string> {
-        const iterator: IterableIterator<EvalPacketInterface> = this.__sentence.gen(
-            this.makeEvalPacket(data)
-        );
-
-        for (let pack of iterator) {
-            yield this.makePresentable(pack.sentence_components);
-        }
     }
 }

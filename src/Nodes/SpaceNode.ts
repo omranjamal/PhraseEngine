@@ -21,4 +21,9 @@ export class SpaceNode extends PhraseNode {
         yield* this.next().gen(packet);
         packet.sentence_components.pop();
     }
+
+    public count(e_packet: EvalPacketInterface): number {
+        const ret = this.next().count(e_packet);
+        return ret;
+    }
 }
