@@ -13,6 +13,7 @@ import { SpacelessNode } from './Nodes/SpacelessNode';
 import { RawTextNode } from './Nodes/RawTextNode';
 import { SpaceNode } from './Nodes/SpaceNode';
 import { RefNode } from './Nodes/RefNode';
+import { BrNode } from './Nodes/BrNode';
 
 import peek from './peek';
 import { PhraseNode, InitPacketInterface } from './Node';
@@ -59,6 +60,9 @@ export default {
     },
     "ref": (root: Node, packet: InitPacketInterface) => {
         return new RefNode(root, packet);
+    },
+    "br": (root: Node, packet: InitPacketInterface) => {
+        return new BrNode(root, packet);
     },
     "#text": (root: Node, packet: InitPacketInterface) => {
         const trimmed_data = root.nodeValue.trim();

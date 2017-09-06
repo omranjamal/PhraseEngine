@@ -44,10 +44,10 @@ export default class PhraseEngine {
     protected makePresentable(components: string[]) {
         return components
             .join('')
-            .replace(/\s+/ig, ' ')
+            .replace(/ +/ig, ' ')
             .replace(/\r/ig, '')
-            .replace(/\s+\n/ig, "\n")
-            .replace(/\n\s+/ig, "\n")
+            .replace(/ +\n/ig, "\n")
+            .replace(/\n +/ig, "\n")
             .trim()
     }
 

@@ -13,5 +13,6 @@ export default mapFilter(factories, [
     'unless',
     'data',
     '#text',
-    'ref'
+    'ref',
+    'br'
 ]);
