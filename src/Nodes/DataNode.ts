@@ -1,3 +1,4 @@
+import { PhraseError } from '../PhraseError';
 import { InitPacketInterface, EvalPacketInterface, VarsPacket } from '../Node';
 import { RefableNode } from '../RefableNode';
 import peek from '../peek';
@@ -12,7 +13,7 @@ export class DataNode extends RefableNode {
 
     public init(root: Node, packet: InitPacketInterface): void {
         if (!(<Element>root).hasAttribute('key')) {
-            throw new Error(`<data /> tags must include a key attribute.`);
+            throw (new PhraseError(`<data /> tags must include a key attribute.`)).node(root);
         }
 
         const check_arr = (<Element>root)

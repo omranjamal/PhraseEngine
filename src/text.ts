@@ -1,6 +1,7 @@
 import { PhraseNode, InitPacketInterface, EvalPacketInterface } from './Node';
 import { SpaceNode } from './Nodes/SpaceNode';
 import peek from './peek';
+import { PhraseError } from './PhraseError';
 
 export default function (root: Node, packet: InitPacketInterface, support: { [key: string]: (root: Node, packet: InitPacketInterface) => PhraseNode}) {
     const length = root.childNodes.length;
@@ -13,7 +14,7 @@ export default function (root: Node, packet: InitPacketInterface, support: { [ke
     let name = root.childNodes.item(length - 1).nodeName;
 
     if (!(name in support)) {
-        throw new Error(`Unrecognized child <${name}>...</${name}>`);
+        throw (new PhraseError(`Unrecognized child <${name}>...</${name}>`)).node(root.childNodes.item(length - 1));
     }
 
     last_node = support[name](
@@ -31,7 +32,7 @@ export default function (root: Node, packet: InitPacketInterface, support: { [ke
         let node: PhraseNode;
 
         if (!(name in support)) {
-            throw new Error(`Unrecognized child <${name}>...</${name}>`);
+            throw (new PhraseError(`Unrecognized child <${name}>...</${name}>`)).node(root.childNodes.item(i));
         }
 
         node = support[name](root.childNodes.item(i), packet);

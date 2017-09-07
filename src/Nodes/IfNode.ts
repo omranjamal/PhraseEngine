@@ -4,6 +4,7 @@ import peek from '../peek';
 import mapFilter from '../mapFilter';
 import factories from '../factories';
 import expressionStack, { isOperator } from '../expressionStack';
+import { PhraseError } from '../PhraseError';
 
 export class IfNode extends RefableNode {
     protected __then: PhraseNode;
@@ -64,13 +65,13 @@ export class IfNode extends RefableNode {
         this.__implicit = false;
 
         if(!(<Element>root).hasAttribute('condition')) {
-            throw new Error(`A condition must be specified in <if/>`);
+            throw (new PhraseError(`A condition must be specified in <if/>`)).node(root);
         }
 
         const condition = (<Element>root).getAttribute('condition');
 
         if (!condition.trim()) {
-            throw new Error(`Condition is empty in <if/>`);
+            throw (new PhraseError(`Condition is empty in <if/>`)).node(root);
         }
 
         this.__logic_stack = expressionStack(condition).reverse();
@@ -112,7 +113,7 @@ export class IfNode extends RefableNode {
             this.__then = type_support['then'](root, packet);
             this.__else = peek(packet.next_stack);
         } else {
-            throw new Error(`Multiple thens or elses in if`);
+            throw (new PhraseError(`Multiple thens or elses in if`)).node(root);
         }
 
         this.registararGenerate(root);

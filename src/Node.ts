@@ -1,3 +1,5 @@
+import { PhraseError } from './PhraseError';
+
 export interface InitPacketInterface {
     ignore_spaces: boolean[];
     next_stack: PhraseNode[];
@@ -67,7 +69,7 @@ export abstract class PhraseNode {
 
     public constructor(root: Node | any, packet: InitPacketInterface) {
         if (!this.validateNodeName(root.nodeName)) {
-            throw new Error(`Tag name "${root.nodeName}" not supported.`);
+            throw (new PhraseError(`Tag name "${root.nodeName}" not supported.`)).node(root);
         }
 
         this.init(root, packet);

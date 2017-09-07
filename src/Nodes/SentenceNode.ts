@@ -4,6 +4,7 @@ import mapFilter from '../mapFilter';
 import factories from '../factories';
 import text from '../text';
 import textSupport from '../textSupport';
+import { PhraseError } from '../PhraseError';
 
 export class SentenceNode extends PhraseNode {
     protected validateNodeName(name: string): boolean {
@@ -22,7 +23,7 @@ export class SentenceNode extends PhraseNode {
                 const id = (<Element>root).getAttribute('id');
 
                 if (id in id_node_map) {
-                    throw new Error(`Duplicate ID detedted "${id}"`);
+                    throw (new PhraseError(`Duplicate ID detected "${id}"`)).node(root);
                 }
 
                 id_node_map[id] = root;

@@ -2,6 +2,7 @@ import { PhraseNode, InitPacketInterface, EvalPacketInterface } from '../Node';
 import peek from '../peek';
 import mapFilter from '../mapFilter';
 import factories from '../factories';
+import { PhraseError } from '../PhraseError';
 
 export class RefNode extends PhraseNode {
     protected validateNodeName(name: string): boolean {
@@ -21,23 +22,23 @@ export class RefNode extends PhraseNode {
         ]);
 
         if (!(<Element>root).hasAttribute('id')) {
-            throw new Error(`<ref>...</ref> must have an ID attribute.`);
+            throw (new PhraseError(`<ref>...</ref> must have an ID attribute.`)).node(root);
         }
 
         if (!(<Element>root).getAttribute('id').trim()) {
-            throw new Error(`<ref>...</ref> must have an non empty ID attribute.`);
+            throw (new PhraseError(`<ref>...</ref> must have an non empty ID attribute.`)).node(root);
         }
 
         const id = (<Element>root).getAttribute('id');
 
         if (!(id in packet.id_map)) {
-            throw new Error(`Element with ID "${id}" not found.`);
+            throw (new PhraseError(`Element with ID "${id}" not found.`)).node(root);
         }
 
         const node = packet.id_map[id];
 
         if (!(node.nodeName in support)) {
-            throw new Error(`<${node.nodeName}>...</${node.nodeName}> cannot be reffered to.`);
+            throw (new PhraseError(`<${node.nodeName}>...</${node.nodeName}> cannot be reffered to.`)).node(root);
         }
 
         this.setNextNode(support[node.nodeName](node, packet));

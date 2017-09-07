@@ -3,6 +3,7 @@ import { RefableNode } from '../RefableNode';
 import peek from '../peek';
 import mapFilter from '../mapFilter';
 import factories from '../factories';
+import { PhraseError } from '../PhraseError';
 
 export class EitherNode extends RefableNode {
     protected __routes: PhraseNode[];
@@ -28,7 +29,7 @@ export class EitherNode extends RefableNode {
             }
 
             if (!(node.nodeName in type_support)) {
-                throw new Error(`Unrecognized tag <${node.nodeName}>...</${node.nodeName}> under <either>...</either>`);
+                throw (new PhraseError(`Unrecognized tag <${node.nodeName}>...</${node.nodeName}> under <either>...</either>`)).node(root);
             }
 
             routes.push(type_support[node.nodeName](node, packet));
@@ -36,7 +37,7 @@ export class EitherNode extends RefableNode {
         }
 
         if (routes.length === 0) {
-            throw new Error(`Either should always have atleast one path.`);
+            throw (new PhraseError(`Either should always have atleast one path.`)).node(root);
         }
 
         this.registararGenerate(root);

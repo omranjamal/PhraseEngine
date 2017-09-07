@@ -3,6 +3,7 @@ import { RefableNode } from '../RefableNode';
 import peek from '../peek';
 import mapFilter from '../mapFilter';
 import factories from '../factories';
+import { PhraseError } from '../PhraseError';
 
 export class SelectNode extends RefableNode {
     protected __map: {
@@ -18,13 +19,13 @@ export class SelectNode extends RefableNode {
 
     public init(root: Node, packet: InitPacketInterface): void {
         if (!(<Element>root).hasAttribute('key')) {
-            throw new Error(`<select/> must have a "key" attribute.`);
+            throw (new PhraseError(`<select/> must have a "key" attribute.`)).node(root);
         }
 
         this.__key = (<Element>root).getAttribute('key');
 
         if (this.__key.trim().length === 0) {
-            throw new Error(`Select must have non empty key`);
+            throw (new PhraseError(`Select must have non empty key`)).node(root);
         }
 
         let map: {[key: string]: PhraseNode} = {};
@@ -38,7 +39,7 @@ export class SelectNode extends RefableNode {
             if (name !== 'for') {
                 if (name === 'default') {
                     if (this.__default) {
-                        throw new Error(`Multiple <default/> in <select/>`);
+                        throw (new PhraseError(`Multiple <default/> in <select/>`)).node(node);
                     }
 
                     this.__default = support['for'](node, packet);
@@ -47,17 +48,17 @@ export class SelectNode extends RefableNode {
                     continue;
                 }
 
-                throw new Error(`Unrecognized tag <${name}>...</${name}> under <select>...</select>`);
+                throw (new PhraseError(`Unrecognized tag <${name}>...</${name}> under <select>...</select>`)).node(node);
             }
 
             if (!(<Element>node).hasAttribute('value')) {
-                throw new Error(`<for>...</for> must have "value" attribute`);
+                throw (new PhraseError(`<for>...</for> must have "value" attribute`)).node(node);
             }
 
             let value = (<Element>node).getAttribute('value');
 
             if (value in map) {
-                throw new Error(`Duplicate value "${value}" in <select/>.`);
+                throw (new PhraseError(`Duplicate value "${value}" in <select/>.`)).node(node);
             }
 
             map[value] = support['for'](node, packet);
@@ -68,7 +69,7 @@ export class SelectNode extends RefableNode {
         }
         
         if (Object.keys(map).length === 0) {
-            throw new Error(`Select must have atleast one for.`);
+            throw (new PhraseError(`Select must have atleast one for.`)).node(root);
         }
 
         this.__map = map;
