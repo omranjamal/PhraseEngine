@@ -1,7 +1,8 @@
 import React from 'react';
 import langCompleter from './langCompleter';
-import PhraseEngine from 'phrase-engine/src/';
+import PhraseEngine from 'phrase-engine/src/index.ts';
 import Ace from './components/Ace';
+import Display from './components/Display';
 
 export class App extends React.Component {
     getInitialState() {
@@ -12,8 +13,21 @@ export class App extends React.Component {
             error_shown: false,
             error_message: '',
             error_line: null,
-            data: {}
+            data: {},
+            iter: null,
+            count: 0
         };
+    }
+
+    iteratorSet(engine) {
+        const dat = {
+            iter: engine.iterate(this.state.data),
+            count: engine.count()
+        };
+
+        console.log(dat);
+
+        this.setState(dat);
     }
 
     nav(editor) {
@@ -30,8 +44,6 @@ export class App extends React.Component {
         try {
             const engine = PhraseEngine.compile(this.state.lang_code);
             const variables = engine.vars().vars;
-
-            console.log(variables);
 
             let mutated = false;
             let n_map = {};
@@ -67,6 +79,8 @@ export class App extends React.Component {
                 });
 
                 this.nav('data');
+            } else {
+                this.iteratorSet(engine);
             }
 
         } catch (e) {
@@ -81,7 +95,7 @@ export class App extends React.Component {
 
             this.setState(mutation);
 
-            clearTimeout(this.__state_timeout);
+            // clearTimeout(this.__state_timeout);
 
             this.__state_timeout = setTimeout(() => {
                 this.setState({
@@ -107,7 +121,7 @@ export class App extends React.Component {
             } catch (e) {
 
             }
-        }, 1000);
+        }, 200);
     }
 
     newLang(c, e) {
@@ -169,8 +183,7 @@ export class App extends React.Component {
                 }
                 {this.state.error_message}
             </aside>
-            <section className="display">
-            </section>
+            <Display iter={this.state.iter} length={this.state.count} />
         </div>
     }
 }

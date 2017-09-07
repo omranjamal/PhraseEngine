@@ -16,7 +16,7 @@ body, html {
     font-family: sans-serif;
 }
 
-.try-window, .app, .editor, .editors, .controls, .editor-container, nav {
+.try-window, .app, .editor, .editors, .controls, .editor-container, .display {
     position: absolute;
     top: 0;
     left: 0;
@@ -36,6 +36,8 @@ body, html {
     right: -400px;
     background: #EC3B3B;
 
+    z-index: 20;
+
     &.shown {
         right: 0px;
     }
@@ -51,11 +53,6 @@ body, html {
     font-size: 0.8em;
     font-weight: bold;
     margin-bottom: 1em;
-}
-
-nav {
-    height: $top-bar-size;
-    background: $top-bar-color;
 }
 
 .controls {
@@ -119,4 +116,37 @@ nav {
 
 .editor {
     font-size: 1.2em;
+}
+
+.display {
+    left: 50%;
+    width: 50%;
+    background: #EEEEEE;
+    color: #2F3129;
+
+    overflow-y: scroll;
+
+    .sentence {
+        padding: 0.3em 1.5em;
+        border-bottom: 1px solid darken(#eee, 5%);
+
+        transition: all 200ms;
+
+        &:hover {
+            color: #eee;
+            background: #333;
+        }
+    }
+}
+
+.show-more-button {
+    display: inline-block;
+    font-size: 0.8em;
+    padding: 0.7em 1.4em;
+    margin: 2em auto 3em 2em;
+    cursor: pointer;
+
+    &:hover {
+        background: darken(#eee, 5%);
+    }
 }
