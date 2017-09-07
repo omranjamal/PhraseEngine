@@ -3,7 +3,7 @@ import "babel-polyfill";
 
 import React from 'react';
 import { render } from 'react-dom';
-import PhraseEngine from 'phrase-engine/src/browser.ts';
+import PhraseEngine from '../node_modules/phrase-engine/src/browser.ts';
 import Ace from './components/Ace';
 
 const str = `
@@ -21,20 +21,17 @@ const str = `
     </sentence>
 `;
 
-// const engine = PhraseEngine.compile();
-
-// for (let sen of engine.iterate({})) {
-//     console.log(sen);
-// }
-
 const try_window = document.getElementsByClassName('try-window')[0];
 
 class App extends React.Component {
     getInitialState() {
         return {
             editor: 'lang',
-            lang_code: "<sentence>\n\tWrite your language file here\n<sentence>",
-            data_code: "{\n}"
+            lang_code: localStorage.getItem('lang_code') || `<sentence>\n\tWrite your phrase script here.\n</sentence>`,
+            data_code: "{ }",
+            error_shown: false,
+            error_message: '',
+            data: {}
         };
     }
 
@@ -42,15 +39,54 @@ class App extends React.Component {
         this.setState({ editor });
     }
 
+    compile() {
+        try {
+            const engine = PhraseEngine.compile(this.state.lang_code);
+            const variables = engine.vars();
+        } catch(e) {
+            this.setState({
+                error_shown: true,
+                error_message: e.message
+            });
+
+            setTimeout(() => {
+                this.setState({
+                    error_shown: false
+                });
+            }, 8000);
+        }
+    }
+
+    parsed = setTimeout(() => {}, 2);
+
+    newData(c) {
+        this.setState({ data_code: c });
+
+        clearTimeout(this.parsed);
+        this.parsed = setTimeout(() => {
+            try {
+                let data = JSON.parse(c);
+
+                this.setState({
+                    data
+                });
+            } catch (e) {
+
+            }
+        }, 1000);
+    }
+
+    newLang(c) {
+        this.setState({ lang_code: c })
+        localStorage.setItem('lang_code', this.state.lang_code);
+    }
+
     render() {
         return <div className="app">
-            <nav>
-
-            </nav>
             <aside className="controls">
                 <a
                 className={`compile-link control-link action-link ${this.state.editor === 'data' ? 'active-link' : ''}`}
-                onClick={() => { this.nav('data') }}
+                onClick={() => { this.compile() }}
                 title="Data">
                     <i className="fa fa-play fa-lg"></i>
                 </a>
@@ -72,16 +108,23 @@ class App extends React.Component {
                     <Ace
                         language='xml'
                         code={this.state.lang_code}
-                        onUpdate={(c) => { this.setState({ lang_code: c }) }}
+                        onUpdate={(c) => { this.newLang(c) }}
+                        focus={true}
                     />
                 </div>
                 <div className={this.state.editor === 'data' ? 'editor-container' : 'editor-container hidden'}>
                     <Ace
                         language='json'
                         code={this.state.data_code}
-                        onUpdate={(c) => { this.setState({ data_code: c }) }}
+                        onUpdate={(c) => { this.newData(c) }}
                     />
                 </div>
+            </section>
+            <aside className={`error ${this.state.error_shown ? 'shown' : ''}`}>
+                <div class="error-title">Error</div>
+                { this.state.error_message }
+            </aside>
+            <section className="display">
             </section>
         </div>
     }

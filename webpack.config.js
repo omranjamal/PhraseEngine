@@ -31,8 +31,11 @@ module.exports = {
             {
                 test: /\.ts$/,
                 loaders: ['babel-loader', 'ts-loader'],
+                exclude: [
+                    path.resolve(__dirname, "node_modules/phrase-engine/dist")
+                ],
                 include: [
-                    path.resolve(__dirname, "node_modules/phrase-engine")
+                    path.resolve(__dirname, "node_modules/phrase-engine/src")
                 ]
             },
             {

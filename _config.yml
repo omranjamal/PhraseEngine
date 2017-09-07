@@ -45,4 +45,3 @@ exclude:
   - webpack.config.js
   - yarn.lock
   - tsconfig.json
-  - scripts/
