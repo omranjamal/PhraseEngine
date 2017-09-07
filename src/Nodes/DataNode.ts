@@ -13,7 +13,9 @@ export class DataNode extends RefableNode {
 
     public init(root: Node, packet: InitPacketInterface): void {
         if (!(<Element>root).hasAttribute('key')) {
-            throw (new PhraseError(`<data /> tags must include a key attribute.`)).node(root);
+            let err = new PhraseError(`<data /> tags must include a key attribute.`);
+            err.node(root);
+            throw err;
         }
 
         const check_arr = (<Element>root)
@@ -55,10 +57,12 @@ export class DataNode extends RefableNode {
     }
 
     public vars(packet: VarsPacket): VarsPacket {
+        let check_array_copy = this.__check_arr.slice(0);
+        
         if (!this.__vared) {
             this.__vared = true;
 
-            let popped: string = this.__check_arr.pop();
+            let popped: string = check_array_copy.pop();
 
             packet.vars[popped] = packet.vars[popped] || [];
 
@@ -67,7 +71,7 @@ export class DataNode extends RefableNode {
                 last: true
             });
 
-            popped = this.__check_arr.pop();
+            popped = check_array_copy.pop();
 
             while (popped) {
                 packet.vars[popped] = packet.vars[popped] || [];
@@ -77,10 +81,8 @@ export class DataNode extends RefableNode {
                     last: false
                 });
 
-                popped = this.__check_arr.pop()
+                popped = check_array_copy.pop()
             }
-
-            console.log(this.next());
 
             this.next().vars(packet);
         }

@@ -5,27 +5,37 @@ describe('EVAL: either', function () {
     describe('.iterate()', function () {
 
         it('should render each data', function () {
-            let li = [...en.compile(`
+            let engine = en.compile(`
                     <sentence>
                         <either>
                             <this>Tomato</this>
                             <or>Potato</or>
                         </either>
                     </sentence>
-                `).iterate()];
+                `);
+
+            engine.vars();
+            engine.count({});
+
+            let li = [...engine.iterate()];
 
             is.equal(li.length, 2);
         });
 
         it('should render each data', function () {
-            let li = [...en.compile(`
+            let engine = en.compile(`
                     <sentence>
                         <either>
                             <this>Tomato</this>
                             <or>Potato</or>
                         </either>
                     </sentence>
-                `).iterate()];
+                `);
+
+            engine.vars();
+            engine.count({});
+
+            let li = [...engine.iterate()];
 
             is.isTrue(li.every(x => x === 'Tomato' || x === 'Potato'));
         });

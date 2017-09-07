@@ -29,7 +29,9 @@ export class EitherNode extends RefableNode {
             }
 
             if (!(node.nodeName in type_support)) {
-                throw (new PhraseError(`Unrecognized tag <${node.nodeName}>...</${node.nodeName}> under <either>...</either>`)).node(root);
+                let err = new PhraseError(`Unrecognized tag <${node.nodeName}>...</${node.nodeName}> under <either>...</either>`);
+                err.node(root);
+                throw err;
             }
 
             routes.push(type_support[node.nodeName](node, packet));
@@ -37,7 +39,9 @@ export class EitherNode extends RefableNode {
         }
 
         if (routes.length === 0) {
-            throw (new PhraseError(`Either should always have atleast one path.`)).node(root);
+            let err = new PhraseError(`Either should always have atleast one path.`);
+            err.node(root);
+            throw err;
         }
 
         this.registararGenerate(root);

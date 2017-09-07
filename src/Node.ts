@@ -69,7 +69,10 @@ export abstract class PhraseNode {
 
     public constructor(root: Node | any, packet: InitPacketInterface) {
         if (!this.validateNodeName(root.nodeName)) {
-            throw (new PhraseError(`Tag name "${root.nodeName}" not supported.`)).node(root);
+            let err = new PhraseError(`Tag name "${root.nodeName}" not supported.`);
+            err.node(root);
+
+            throw err;
         }
 
         this.init(root, packet);

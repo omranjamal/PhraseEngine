@@ -5,11 +5,18 @@ describe('EVAL: data', function () {
     describe('.iterate()', function () {
 
         it('should render the data', function () {
-            let li = [...en.compile(`
-                    <sentence>
-                        <data key="x" />
-                    </sentence>
-                `).iterate({
+            let engine = en.compile(`
+                <sentence>
+                    <data key="x" />
+                </sentence>
+            `);
+
+            engine.vars();
+            engine.count({
+                x: 'XXX'
+            });
+
+            let li = [...engine.iterate({
                     x: 'XXX'
                 })];
 
@@ -17,11 +24,19 @@ describe('EVAL: data', function () {
         });
 
         it('should render the first available data', function () {
-            let li = [...en.compile(`
-                    <sentence>
-                        <data key="z|x|y" />
-                    </sentence>
-                `).iterate({
+            let engine = en.compile(`
+                <sentence>
+                    <data key="z|x|y" />
+                </sentence>
+            `);
+
+            engine.vars();
+            engine.count({
+                x: 'XXX',
+                y: 'YYY'
+            });
+
+            let li = [...engine.iterate({
                     x: 'XXX',
                     y: 'YYY'
                 })];
@@ -30,11 +45,18 @@ describe('EVAL: data', function () {
         });
 
         it('should render ignore unavailable data', function () {
-            let li = [...en.compile(`
-                    <sentence>
-                        <data key="x|y" />
-                    </sentence>
-                `).iterate({
+            let engine = en.compile(`
+                <sentence>
+                    <data key="x|y" />
+                </sentence>
+            `);
+
+            engine.vars();
+            engine.count({
+                y: 'YYY'
+            });
+
+            let li = [...engine.iterate({
                     y: 'YYY'
                 })];
 
@@ -43,12 +65,17 @@ describe('EVAL: data', function () {
 
 
         it('should throw if data isn\'t found', function () {
-            is.throws(() => {
-                let li = [...en.compile(`
+            let engine = en.compile(`
                     <sentence>
                         <data key="x|y" />
                     </sentence>
-                `).iterate({})];
+                `);
+
+            engine.vars();
+            engine.count({});
+
+            is.throws(() => {
+                let li = [...engine.iterate({})];
             });
         });
 

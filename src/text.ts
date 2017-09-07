@@ -14,7 +14,10 @@ export default function (root: Node, packet: InitPacketInterface, support: { [ke
     let name = root.childNodes.item(length - 1).nodeName;
 
     if (!(name in support)) {
-        throw (new PhraseError(`Unrecognized child <${name}>...</${name}>`)).node(root.childNodes.item(length - 1));
+        let err = new PhraseError(`Unrecognized child <${name}>...</${name}>`);
+        err.node(root.childNodes.item(length - 1));
+
+        return err;
     }
 
     last_node = support[name](
@@ -32,7 +35,10 @@ export default function (root: Node, packet: InitPacketInterface, support: { [ke
         let node: PhraseNode;
 
         if (!(name in support)) {
-            throw (new PhraseError(`Unrecognized child <${name}>...</${name}>`)).node(root.childNodes.item(i));
+            let err = new PhraseError(`Unrecognized child <${name}>...</${name}>`);
+            err.node(root.childNodes.item(i));
+
+            throw err;
         }
 
         node = support[name](root.childNodes.item(i), packet);

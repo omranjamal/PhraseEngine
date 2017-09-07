@@ -5,23 +5,31 @@ describe('EVAL: maybe', function () {
     describe('.iterate()', function () {
 
         it('should render two sentences', function () {
-            let li = [...en.compile(`
+            let engine = en.compile(`
                     <sentence>
                         <maybe>Y</maybe>
                     </sentence>
-                `).iterate()];
+                `);
+            engine.vars();
+            engine.count();
+
+            let li = [...engine.iterate()];
 
             is.equal(li.length, 2);
             is.isTrue(li.every(x => x === '' || x === 'Y'));
         });
 
         it('should interact with if (false on non-render, vice-versa)', function () {
-            let li = [...en.compile(`
+            let engine = en.compile(`
                     <sentence>
                         <maybe id="a">A</maybe>
                         <if condition="!#a">X</if>
                     </sentence>
-                `).iterate()];
+                `);
+            engine.vars();
+            engine.count();
+
+            let li = [...engine.iterate()];
 
             is.equal(li.length, 2);
             is.isTrue(li.every(x => x === 'X' || x === 'A'));

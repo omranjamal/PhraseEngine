@@ -5,23 +5,32 @@ describe('EVAL: spaceless', function () {
     describe('.iterate()', function () {
 
         it('should make spaces vanish', function () {
-            let li = [...en.compile(`
+            let engine = en.compile(`
                     <sentence>
                         <text>A</text>
                         <text>B</text>
                     </sentence>
-                `).iterate()];
+                `);
+            engine.vars();
+            engine.count();
+
+            let li = [...engine.iterate()];
 
             is.equal(li[0], 'A B');
 
-            li = [...en.compile(`
+
+            engine = en.compile(`
                     <sentence>
                         <spaceless>
                             <text>A</text>
                             <text>B</text>
                         </spaceless>
                     </sentence>
-                `).iterate()];
+                `);
+            engine.vars();
+            engine.count();
+
+            li = [...engine.iterate()];
 
             is.equal(li[0], 'AB');
         });

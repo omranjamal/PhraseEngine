@@ -23,7 +23,10 @@ export class SentenceNode extends PhraseNode {
                 const id = (<Element>root).getAttribute('id');
 
                 if (id in id_node_map) {
-                    throw (new PhraseError(`Duplicate ID detected "${id}"`)).node(root);
+                    let err = new PhraseError(`Duplicate ID detected "${id}"`);
+                    err.node(root);
+
+                    throw err;
                 }
 
                 id_node_map[id] = root;

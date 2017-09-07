@@ -22,23 +22,35 @@ export class RefNode extends PhraseNode {
         ]);
 
         if (!(<Element>root).hasAttribute('id')) {
-            throw (new PhraseError(`<ref>...</ref> must have an ID attribute.`)).node(root);
+            let err = new PhraseError(`<ref>...</ref> must have an ID attribute.`);
+            err.node(root);
+
+            throw err;
         }
 
         if (!(<Element>root).getAttribute('id').trim()) {
-            throw (new PhraseError(`<ref>...</ref> must have an non empty ID attribute.`)).node(root);
+            let err = new PhraseError(`<ref>...</ref> must have an non empty ID attribute.`);
+            err.node(root);
+
+            throw err;
         }
 
         const id = (<Element>root).getAttribute('id');
 
         if (!(id in packet.id_map)) {
-            throw (new PhraseError(`Element with ID "${id}" not found.`)).node(root);
+            let err = new PhraseError(`Element with ID "${id}" not found.`);
+            err.node(root);
+
+            throw err;
         }
 
         const node = packet.id_map[id];
 
         if (!(node.nodeName in support)) {
-            throw (new PhraseError(`<${node.nodeName}>...</${node.nodeName}> cannot be reffered to.`)).node(root);
+            let err = new PhraseError(`<${node.nodeName}>...</${node.nodeName}> cannot be reffered to.`);
+            err.node(root);
+
+            throw err;
         }
 
         this.setNextNode(support[node.nodeName](node, packet));
