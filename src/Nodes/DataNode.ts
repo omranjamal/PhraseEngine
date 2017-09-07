@@ -55,26 +55,34 @@ export class DataNode extends RefableNode {
     }
 
     public vars(packet: VarsPacket): VarsPacket {
-        let popped: string = this.__check_arr.pop();
+        if (!this.__vared) {
+            this.__vared = true;
 
-        packet.vars[popped] = packet.vars[popped] || [];
+            let popped: string = this.__check_arr.pop();
 
-        packet.vars[popped].push({
-            type: 'string',
-            last: true
-        });
-
-        popped = this.__check_arr.pop();
-
-        while (popped) {
             packet.vars[popped] = packet.vars[popped] || [];
 
             packet.vars[popped].push({
                 type: 'string',
-                last: false
+                last: true
             });
-            
-            popped = this.__check_arr.pop()
+
+            popped = this.__check_arr.pop();
+
+            while (popped) {
+                packet.vars[popped] = packet.vars[popped] || [];
+
+                packet.vars[popped].push({
+                    type: 'string',
+                    last: false
+                });
+
+                popped = this.__check_arr.pop()
+            }
+
+            console.log(this.next());
+
+            this.next().vars(packet);
         }
 
         return packet;
