@@ -10,7 +10,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "css-loader": "^0.28.7",
-    "phrase-engine": "^0.1.1",
+    "phrase-engine": "^0.1.11",
     "preact": "^8.2.5",
     "preact-compat": "^3.17.0",
     "react-codemirror": "^1.0.0",

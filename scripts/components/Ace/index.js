@@ -4,7 +4,8 @@ export default class Ace extends React.Component {
     getInitialState() {
         return {
             code: this.props.code || '',
-            lang: this.props.language || 'json'
+            lang: this.props.language || 'json',
+            error_line: null
         };
     }
 
@@ -19,84 +20,38 @@ export default class Ace extends React.Component {
         editor.getSession().setMode(`ace/mode/${this.state.lang}`);
         editor.setValue(this.state.code);
 
-        editor.getSession().on('change', () => {
-            this.setState({
-                code: editor.getValue()
-            });
+        if (this.props.onUpdate) {
+            editor.getSession().on('change', (e) => {
+                this.setState({
+                    code: editor.getValue()
+                });
 
-            this.props.onUpdate(this.state.code);
-        });
+                this.props.onUpdate(this.state.code, e);
+            });
+        }
+
+        if (this.props.onCursor) {
+            const selection = editor.getSelection();
+
+            selection.on('changeCursor', (e) => {
+                this.props.onCursor(selection.getCursor());
+            });
+        }
 
         editor.setOptions({
             enableBasicAutocompletion: true
         });
 
-        const completer = {
-            getCompletions: function (editor, session, pos, prefix, callback) {
-                let line = session.getLine(pos.row).substr(0, pos.column);
-                let tokens = line
-                    .replace(/\s+/ig, ' ')
-                    .split(' ');
-                
-                let tag_writing = tokens[tokens.length - 1][0] === '<';
-                let tags = tokens.filter(token => (/^\<[a-z]{2,10}$/g).test(token));
-                let tag = (tags[tags.length - 1] || '').substr(1);
-                let attr_writing = !tag_writing && !!tag;
+        if (this.props.completer) {
+            langTools.addCompleter(this.props.completer);
+            editor.completers = [this.props.completer];
 
-                let basics = ['id', 'class'];
-
-                if (tag_writing) {
-                    callback(null, ([
-                        'sentence',
-                        'if',
-                        'or',
-                        'then',
-                        'this',
-                        'for',
-                        'else',
-                        'unless',
-                        'either',
-                        'select',
-                        'maybe',
-                        'br',
-                        'data',
-                        'ref',
-                        'spaceless',
-                        'text'
-                    ]).map(function (ea) {
-                        return { value: ea, score: 100, meta: "tag" }
-                    }));
-                } else if (attr_writing) {
-                    callback(null, (({
-                        if: basics.concat(['condition']),
-                        or: basics,
-                        then: basics,
-                        this: basics,
-                        for: basics.concat(['value']),
-                        else: basics,
-                        unless: basics.concat(['condition']),
-                        either: basics,
-                        select: basics.concat(['key']),
-                        maybe: basics,
-                        data: basics.concat(['key']),
-                        ref: ['id'],
-                        spaceless: basics,
-                        text: basics
-                    }[tag]) || []).map(function (ea) {
-                        return { value: ea + '="', score: 100, meta: "attr" }
-                    }));
+            editor.commands.on("afterExec", function (e) {
+                if (e.command.name == "insertstring" && /^[\w\\< ]$/.test(e.args)) {
+                    editor.execCommand("startAutocomplete")
                 }
-            }
+            });
         }
-
-        langTools.addCompleter(completer);
-        editor.completers = [completer];
-
-        editor.commands.on("afterExec", function (e) {
-            if (e.command.name == "insertstring" && /^[\w\\< ]$/.test(e.args)) {
-                editor.execCommand("startAutocomplete")
-            }
-        })
 
         if (this.props.focus) {
             editor.focus();
@@ -115,6 +70,23 @@ export default class Ace extends React.Component {
 
             this.editor.setValue(this.state.code);
             this.editor.clearSelection();
+        }
+
+        if (next.focus) {
+            this.editor.focus();
+        }
+
+        this.setState({
+            error_line: next.errorAt
+        });
+
+        if (next.errorAt) {
+            this.editor.getSession().setAnnotations([{
+                row: next.errorAt - 1,
+                column: 0,
+                type: "error",
+                text: next.errorMessage
+            }]);
         }
     }
 

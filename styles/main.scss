@@ -44,7 +44,13 @@ body, html {
 .error-title {
     color: white;
     font-weight: bold;
-    margin-bottom: 0.5em;
+    margin-bottom: 0.1em;
+}
+
+.error-line {
+    font-size: 0.8em;
+    font-weight: bold;
+    margin-bottom: 1em;
 }
 
 nav {
