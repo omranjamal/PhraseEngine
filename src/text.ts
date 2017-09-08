@@ -44,6 +44,7 @@ export default function (root: Node, packet: InitPacketInterface, support: { [ke
         node = support[name](root.childNodes.item(i), packet);
 
         if (node instanceof SpaceNode && peek(packet.ignore_spaces)) {
+            packet.next_stack.pop();
             continue;
         }
 
