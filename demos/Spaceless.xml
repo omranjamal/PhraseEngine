@@ -1,0 +1,17 @@
+<sentence>
+    <either>
+    
+        <this>
+            <text>To</text>
+            <text>gether</text>
+        </this>
+
+        <or>
+            <spaceless>
+                <text>To</text>
+                <text>gether</text>
+            </spaceless>
+        </or>
+
+    </either>
+</sentence>

@@ -1,68 +1,79 @@
 import React from 'react';
 
-const __count = 2;
+const __count = 40;
 
 export default class Display extends React.Component {
     getInitialState() {
         return {
             length: this.props.length,
             iter: this.props.iter,
-            cur: 0,
-            page: 1,
+            showMore: false,
             li: []
         };
     }
 
+    __should = false;
+    shouldComponentUpdate() {
+        if (this.__should) {
+            this.__should = false;
+            return true;
+        }
+
+        return false;
+    }
+
     componentWillReceiveProps(next) {
         if (next.iter !== this.state.iter) {
+            this.__should = true;
+
             this.setState({
                 length: next.length,
                 iter: next.iter,
-                cur: 0,
-                page: 1,
-                li: []
+                showMore: true,
+                li: this.getMore(next.iter)
             });
         }
     }
 
-    getList() {
-        if (this.state.iter === null) {
-            return [];
-        }
-
-        let diff = this.state.page - this.state.cur;
+    getMore(iter = this.state.iter) {
         let new_list = [];
+        for (let i = 0; i < __count; i++) {
+            let val;
 
-        while (diff--) {
-            for (let i = 0; i < __count; i++) {
-                let val = this.state.iter.next().value;
-
-                if (val === undefined) {
-                    break;
-                }
-
-                new_list.push(val);
+            try {
+                val = iter.next().value;
+            } catch (e) {
+                return [];
             }
+
+            if (val === undefined) {
+                break;
+            }
+
+            new_list.push(val);
         }
 
-        this.state.cur += diff;
-        this.state.li = this.state.li.concat(new_list);
-        return this.state.li;
+        return new_list;
     }
 
     more() {
+        this.__should = true;
+
         this.setState({
-            page: this.state.page+1
+            li: this.state.li.concat(this.getMore())
         });
     }
 
     render() {
         return <section className="display">
-            {this.getList().map(sen => {
-                return <div className="sentence">{sen}</div>
+            {this.state.li.map((sen, i) => {
+                return <div className="sentence">
+                    <span class="num">{i+1}</span>
+                    <span class="sen">{sen}</span>
+                </div>
             })}
             {
-                (this.state.page * __count) < this.state.length
+                this.state.li.length < this.state.length
                     ? <a className="show-more-button" onClick={() => { this.more() }}>Show More</a>
                     : null
             }

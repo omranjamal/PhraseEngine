@@ -1,8 +1,10 @@
 import React from 'react';
 import langCompleter from './langCompleter';
-import PhraseEngine from 'phrase-engine/src/index.ts';
+import PhraseEngine from 'phrase-engine';
 import Ace from './components/Ace';
 import Display from './components/Display';
+import DemoSelect from './components/DemoSelect';
+import DemoData from '../demos.json';
 
 export class App extends React.Component {
     getInitialState() {
@@ -10,12 +12,15 @@ export class App extends React.Component {
             editor: 'lang',
             lang_code: localStorage.getItem('lang_code') || `<sentence>\n\tWrite your phrase script here.\n</sentence>`,
             data_code: "{ }",
+            compiled_lang: "",
+            compiled_data: "",
             error_shown: false,
             error_message: '',
             error_line: null,
             data: {},
             iter: null,
-            count: 0
+            count: 0,
+            quick: 'custom'
         };
     }
 
@@ -24,8 +29,6 @@ export class App extends React.Component {
             iter: engine.iterate(this.state.data),
             count: engine.count()
         };
-
-        console.log(dat);
 
         this.setState(dat);
     }
@@ -37,7 +40,13 @@ export class App extends React.Component {
     __state_timeout = setTimeout(() => { }, 2);
 
     compile() {
+        if (this.state.compiled_lang === this.state.lang_code && this.state.compiled_data === this.state.data_code) {
+            return;
+        }
+
         this.setState({
+            compiled_lang: this.state.lang_code,
+            compiled_data: this.state.data_code,
             error_line: null
         });
 
@@ -79,9 +88,9 @@ export class App extends React.Component {
                 });
 
                 this.nav('data');
-            } else {
-                this.iteratorSet(engine);
             }
+            
+            this.iteratorSet(engine);
 
         } catch (e) {
             let mutation = {
@@ -95,7 +104,7 @@ export class App extends React.Component {
 
             this.setState(mutation);
 
-            // clearTimeout(this.__state_timeout);
+            clearTimeout(this.__state_timeout);
 
             this.__state_timeout = setTimeout(() => {
                 this.setState({
@@ -108,7 +117,15 @@ export class App extends React.Component {
     parsed = setTimeout(() => { }, 2);
 
     newData(c) {
-        this.setState({ data_code: c });
+        let mut = {};
+
+        if (c !== this.state.data_code && c.length && this.state.data_code.length) {
+            mut.quick = 'custom';
+        }
+
+        mut.data_code = c;
+
+        this.setState(mut);
 
         clearTimeout(this.parsed);
         this.parsed = setTimeout(() => {
@@ -125,8 +142,31 @@ export class App extends React.Component {
     }
 
     newLang(c, e) {
-        this.setState({ lang_code: c })
+        let mut = {};
+
+        if (c !== this.state.lang_code && c.length && this.state.lang_code.length) {
+            mut.quick = 'custom';
+        }
+
+        mut.lang_code = c;
+        this.setState(mut);
+
         localStorage.setItem('lang_code', this.state.lang_code);
+    }
+
+    quick(v) {
+        this.setState({
+            quick: v
+        });
+
+        if (v !== 'custom') {
+            let mutation = {
+                lang_code: DemoData[v].lang,
+                data_code: DemoData[v].data || '{ }'
+            };
+
+            this.setState(mutation);
+        }
     }
 
     render() {
@@ -151,6 +191,9 @@ export class App extends React.Component {
                     <i className="fa fa-database fa-lg"></i>
                 </a>
             </aside>
+            <div className="quick-bar">
+                <DemoSelect val={this.state.quick} onChange={(v) => { this.quick(v) }}/>
+            </div>
             <section className="editors">
                 <div className={this.state.editor === 'lang' ? 'editor-container' : 'editor-container hidden'}>
                     <Ace

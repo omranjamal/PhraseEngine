@@ -1,7 +1,7 @@
 --- 
 ---
 $side-bar-size: 4em;
-$top-bar-size: 0;
+$top-bar-size: 3em;
 $top-bar-color: #272822;
 $side-bar-color: #272822;
 
@@ -16,7 +16,7 @@ body, html {
     font-family: sans-serif;
 }
 
-.try-window, .app, .editor, .editors, .controls, .editor-container, .display {
+.try-window, .app, .editor, .editors, .controls, .editor-container, .display, .quick-bar {
     position: absolute;
     top: 0;
     left: 0;
@@ -56,20 +56,20 @@ body, html {
 }
 
 .controls {
-    top: $top-bar-size;
-    height: calc(100% - #{$top-bar-size});
+    height: 100%;
     width: $side-bar-size;
     background: $side-bar-color;
 
     a {
+        line-height: 1em;
         cursor: pointer;
         display: block;
         width: 100%;
-        padding: 1.5em 0;
+        padding: 1em 0;
         color: white;
         text-align: center;
         border-left: 4px solid $side-bar-color;
-        font-size: 0.8em;
+        // font-size: 0.8em;
         
 
         &:hover {
@@ -101,6 +101,37 @@ body, html {
     }
 }
 
+.quick-bar {
+    left: $side-bar-size;
+    width: calc(50% - #{$side-bar-size});
+    height: $top-bar-size;
+    background: #2F3129;
+
+    select {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        right: 1em;
+        height: 2em;
+
+        border: 0;
+        background: #101010;
+        padding: 0 1em;
+        outline: 0;
+        color: #8A8A8A;
+    }
+
+    option {
+        color: #BABABA;
+        padding: 1em;
+
+        &:hover {
+            background: red;
+        }
+    }
+}
+
 .editors {
     top: $top-bar-size;
     height: calc(100% - #{$top-bar-size});
@@ -127,14 +158,34 @@ body, html {
     overflow-y: scroll;
 
     .sentence {
-        padding: 0.3em 1.5em;
+        padding: 0.3em 0 0.3em 1em;
         border-bottom: 1px solid darken(#eee, 5%);
+        width: 100%;
+        overflow: auto;
 
         transition: all 200ms;
 
         &:hover {
             color: #eee;
             background: #333;
+        }
+
+        .num, .sen {
+            display: block;
+            float: left;
+        }
+
+        .num {
+            width: 4em;
+            padding: 0 0.5em 0;
+            font-size: 0.8em;
+            vertical-align: middle;
+            color: #666;
+        }
+
+        .sen {
+            left: 4em;
+            width: calc(100% - 4em);
         }
     }
 }

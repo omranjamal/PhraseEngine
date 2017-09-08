@@ -1,0 +1,9 @@
+<sentence>
+    I really
+    <either id="affection">
+        <this>like</this>
+        <or>love</or>
+    </either>
+    Trains.
+    My cousin <ref id="affection">s them aswell.
+</sentence>
