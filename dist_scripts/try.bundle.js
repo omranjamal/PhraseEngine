@@ -15895,6 +15895,8 @@ var Ace = function (_React$Component) {
     }, {
         key: 'componentWillReceiveProps',
         value: function componentWillReceiveProps(next) {
+            var _this3 = this;
+
             if (this.state.code !== next.code) {
                 this.setState({
                     code: next.code
@@ -15905,7 +15907,10 @@ var Ace = function (_React$Component) {
             }
 
             if (next.focus) {
-                this.editor.focus();
+                setTimeout(function () {
+                    _this3.editor.resize();
+                    _this3.editor.focus();
+                }, 50);
             }
 
             this.setState({
@@ -15924,11 +15929,11 @@ var Ace = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this3 = this;
+            var _this4 = this;
 
             return _react2.default.createElement('div', {
                 ref: function ref(editor) {
-                    _this3.editor_window || (_this3.editor_window = editor);
+                    _this4.editor_window || (_this4.editor_window = editor);
                 },
                 className: 'editor ' + this.props.className
             });

@@ -73,7 +73,10 @@ export default class Ace extends React.Component {
         }
 
         if (next.focus) {
-            this.editor.focus();
+            setTimeout(() => {
+                this.editor.resize();
+                this.editor.focus();
+            }, 50);
         }
 
         this.setState({
