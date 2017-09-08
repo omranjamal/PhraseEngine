@@ -71,13 +71,13 @@ export class App extends React.Component {
                         ret.push(en.values[0]);
                     } else if (var_stack.some(c => c.type === 'string' && c.last)) {
                         ret.push('[Fill this in]');
-                    } else {
+                    } else if (var_stack.some(c => c.type === 'boolean')) {
                         ret.push(true);
                     }
                 }
 
                 return ret;
-            }).forEach(c => {
+            }).filter(x => x.length === 2).forEach(c => {
                 n_map[c[0]] = c[1];
             });
 

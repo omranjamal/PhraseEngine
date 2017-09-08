@@ -1,0 +1,9 @@
+<sentence>
+    <text>
+        <if condition="female & married">Mrs.</if>
+        <if condition="female & !married">Ms.</if>
+        <if condition="!female">Mr.</if>
+    </text>
+    <data key="last_name|first_name" />
+    likes Trains.
+</sentence>

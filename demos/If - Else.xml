@@ -1,0 +1,8 @@
+<sentence>
+    <if condition="sir">
+        <then>Sir</then>
+        <else>Mr.</else>
+    </if>
+    <data key="name" />
+    likes to party.
+</sentence>

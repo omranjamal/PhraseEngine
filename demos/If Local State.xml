@@ -1,0 +1,10 @@
+<sentence>
+    Shaira loves
+    <either>
+        <this id="air">air planes</this>
+        <this id="rail">trains</this>
+    </either>.
+    She likes watching the
+    <if condition="#air">clouds below her.</if>
+    <if condition="#rail">country side around her.</if>
+</sentence>
