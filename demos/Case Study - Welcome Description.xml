@@ -1,0 +1,62 @@
+<sentence>
+    Language files on steriods for
+    <either>
+        <this>UIs</this>
+        <or>apps</or>
+        <or>web apps</or>
+        <or>websites</or>
+        <or>forms</or>
+        <or>bots</or>
+    </either>
+    that
+    <either>
+        <this>aren't</this>
+        <or>are not</or>
+        <or id="direct-negative">
+            don't
+            <maybe>want to</maybe>
+            <either>
+                <this>seem</this>
+                <this>get</this>
+                <or>become</or>
+                <or>be perceived as</or>
+            </either>
+        </or>
+    </either>
+    <either>
+        <this>boring</this>
+        <or>uninteresting</or>
+        <or>repetitive</or>
+        <or>monotonous</or>
+        <or>dull</or>
+    </either>
+    <if condition="#direct-negative">
+        <then>
+            <either>
+                <this>over time</this>
+                <or>
+                    <text id="after">
+                        after
+                        <either>
+                            <this>a while</this>
+                            <or>some time</or>
+                            <or>the first time</or>
+                            <or>a few times</or>
+                        </either>
+                    </text>
+                </or>
+                <or>
+                    in
+                    <either>
+                        <this>a day</this>
+                        <or>a week</or>
+                        <or>a month</or>
+                    </either>
+                </or>
+            </either>
+        </then>
+        <else>
+            <ref id="after"/>
+        </else>
+    </if>
+</sentence>
