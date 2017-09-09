@@ -13712,7 +13712,7 @@ var App = exports.App = function (_React$Component) {
                 error_message: '',
                 error_line: null,
                 data: {},
-                iter: null,
+                iter: false,
                 count: 0,
                 quick: 'custom'
             };
@@ -13973,7 +13973,8 @@ var App = exports.App = function (_React$Component) {
                     ) : null,
                     this.state.error_message
                 ),
-                _react2.default.createElement(_Display2.default, { iter: this.state.iter, length: this.state.count })
+                _react2.default.createElement(_Display2.default, { iter: this.state.iter, length: this.state.count }),
+                !this.state.iter ? _react2.default.createElement('iframe', { src: './try-welcome.htm' }) : ''
             );
         }
     }]);

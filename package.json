@@ -14,6 +14,7 @@
     "preact": "^8.2.5",
     "preact-compat": "^3.17.0",
     "react-codemirror": "^1.0.0",
+    "sass-lattice": "^1.0.0",
     "ts-loader": "^2.3.4",
     "typescript": "^2.5.2",
     "uglifyjs-webpack-plugin": "^0.4.6",

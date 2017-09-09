@@ -1,9 +1,12 @@
 --- 
----
-$side-bar-size: 4em;
-$top-bar-size: 3em;
-$top-bar-color: #272822;
-$side-bar-color: #272822;
+--- 
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
+
+$grid-generate-responsive-order: true;
+@import '../node_modules/sass-lattice/Lattice.scss';
+
+$main-color: #259991;
+$main-dark-color: #03150f;
 
 *, *:before, *:after {
     box-sizing: border-box;
@@ -12,192 +15,168 @@ $side-bar-color: #272822;
 body, html {
     padding: 0;
     margin: 0;
-    overflow: hidden;
-    font-family: sans-serif;
+    outline: 0;
+    overflow-x: hidden;
+    min-height: 200vh;
+
+    font-family: Roboto;
+
+    background: $main-color;
 }
 
-.try-window, .app, .editor, .editors, .controls, .editor-container, .display, .quick-bar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-}
+.welcome {
+    min-height: 85vh;
+    background: white;
+    position: relative;
+    display: flex;
+    align-items: center;
 
-.error {
-    padding: 1em;
-    color: #FFAFAF;
-    position: absolute;
-    top: 3em;
-    width: 400px;
-    transition: right 200ms;
-    right: -400px;
-    background: #EC3B3B;
+    &::after {
+        position: absolute;
+        bottom: -5.5em;
 
-    z-index: 20;
-
-    &.shown {
-        right: 0px;
-    }
-}
-
-.error-title {
-    color: white;
-    font-weight: bold;
-    margin-bottom: 0.1em;
-}
-
-.error-line {
-    font-size: 0.8em;
-    font-weight: bold;
-    margin-bottom: 1em;
-}
-
-.controls {
-    height: 100%;
-    width: $side-bar-size;
-    background: $side-bar-color;
-
-    a {
-        line-height: 1em;
-        cursor: pointer;
+        content: "";
         display: block;
-        width: 100%;
-        padding: 1em 0;
+        border: 5em solid transparent;
+        border-top-color: white;
+        border-left-width: 7em;
+        border-right-width: 7em;
+        border-bottom: 0;
+
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: 0;
+        height: 0;
+    }
+
+    &::before {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        content: "";
+        display: block;
+        transform: rotate(-3deg);
+        transform-origin: 100% 100%;
+        background: white;
+        height: 20em;
+        width: 120%;
+    }
+
+    .welcome-content {
+        z-index: 2000;
+
+        width: 90%;
+        max-width: 1000px;
+        margin: 4em auto;
+
+        display: flex;
+        flex-direction: column;
+    }
+
+    .welcome-row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .welcome-divider {
+        width: 2px;
+    }
+
+    .welcome-logo, .welcome-tagline {
+        width: calc(50% - 1px);
+        padding: 2em;
+    }
+
+    .welcome-logo {
+        text-align: right;
+
+        img {
+            max-width: 90%;
+        }
+    }
+
+    .welcome-divider {
+        position: relative;
+        height: 10em;
+
+        &::after {
+            top: 30%;
+            position: absolute;
+            left: 0;
+            width: 50%;
+            content: " ";
+            height: 40%;
+            background: lighten($main-color, 30%);
+        }
+    }
+
+    .welcome-tagline {
+        text-align: left;
+        font-size: 1.5em;
+        font-weight: 300;
+
+        color: darken(desaturate($main-color, 15%), 10%);
+
+        display: flex;
+        align-items: center;
+
+        &::first-letter {
+            margin-left: 2em;
+        }
+    }
+
+    .btn {
+        padding: 1em 1.5em;
+        margin: 1em;
+        background: $main-color;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        height: 5em;
         color: white;
-        text-align: center;
-        border-left: 4px solid $side-bar-color;
-        // font-size: 0.8em;
-        
 
         &:hover {
-            $lighter: lighten($side-bar-color, 10%);
-            background: $lighter;
-            border-left: 4px solid $lighter;
+            background-color: #3799FF;
         }
 
-        &.active-link {
-            border-left: 4px solid #edb438;
-            // background: darken($side-bar-color, 5%);
-            background: #2F3129;     
-        }
-
-        &.compile-link {
-            $color: #80BA36;
-
-            margin-bottom: 2em;
-
-            border-left: 4px solid $color;
-            background: $color;
+        &.btn-ghost {
+            background: transparent;
+            border: 0.5em solid $main-color;
+            color: darken(desaturate($main-color, 15%), 20%);
 
             &:hover {
-                $lighter: lighten($color, 10%);
-                background: $lighter;
-                border-left: 4px solid $lighter;
-            }
-        }
-    }
-}
-
-.quick-bar {
-    left: $side-bar-size;
-    width: calc(50% - #{$side-bar-size});
-    height: $top-bar-size;
-    background: #2F3129;
-
-    select {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        margin: auto;
-        right: 1em;
-        height: 2em;
-
-        border: 0;
-        background: #101010;
-        padding: 0 1em;
-        outline: 0;
-        color: #8A8A8A;
-    }
-
-    option {
-        color: #BABABA;
-        padding: 1em;
-
-        &:hover {
-            background: red;
-        }
-    }
-}
-
-.editors {
-    top: $top-bar-size;
-    height: calc(100% - #{$top-bar-size});
-    left: $side-bar-size;
-    width: calc(50% - #{$side-bar-size});
-}
-
-.editor-container {
-    &.hidden {
-        display: none;
-    }
-}
-
-.editor {
-    font-size: 1.2em;
-}
-
-.display {
-    left: 50%;
-    width: 50%;
-    background: #EEEEEE;
-    color: #2F3129;
-
-    overflow-y: scroll;
-
-    .sentence {
-        padding: 0.3em 0 0.3em 1em;
-        border-bottom: 1px solid darken(#eee, 5%);
-        width: 100%;
-        overflow: auto;
-
-        transition: all 200ms;
-
-        &:hover {
-            color: #eee;
-            background: #333;
+                background: transparent;
+                border-color: #3799FF;
+            }    
         }
 
-        .num, .sen {
-            display: block;
-            float: left;
+        .btn-main-text {
+            font-size: 1.5em;
         }
 
-        .num {
-            width: 4em;
-            padding: 0 0.5em 0;
+        .btn-sub-text {
             font-size: 0.8em;
-            vertical-align: middle;
-            color: #666;
-        }
-
-        .sen {
-            left: 4em;
-            width: calc(100% - 4em);
+            margin-left: 2em;
+            text-transform: uppercase;
         }
     }
-}
 
-.show-more-button {
-    display: inline-block;
-    font-size: 0.8em;
-    padding: 0.7em 1.4em;
-    margin: 2em auto 3em 2em;
-    cursor: pointer;
-
-    &:hover {
-        background: darken(#eee, 5%);
+    .welcome-docs-pointer {
+        color: $main-color;
+        position: absolute;
+        bottom: -5vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5em;
+        
+        span {
+            margin: 0.8em 0 0.3em 0;
+        }
     }
 }

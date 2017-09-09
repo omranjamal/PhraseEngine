@@ -18,7 +18,7 @@ export class App extends React.Component {
             error_message: '',
             error_line: null,
             data: {},
-            iter: null,
+            iter: false,
             count: 0,
             quick: 'custom'
         };
@@ -227,6 +227,9 @@ export class App extends React.Component {
                 {this.state.error_message}
             </aside>
             <Display iter={this.state.iter} length={this.state.count} />
+            {
+                !this.state.iter ? <iframe src="./try-welcome.htm"></iframe> : ''
+            }
         </div>
     }
 }

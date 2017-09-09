@@ -1,17 +1,207 @@
 --- 
 ---
+$side-bar-size: 4em;
+$top-bar-size: 3em;
+$top-bar-color: #272822;
+$side-bar-color: #272822;
+
+*, *:before, *:after {
+    box-sizing: border-box;
+}
 
 body, html {
     padding: 0;
     margin: 0;
+    overflow: hidden;
+    font-family: sans-serif;
 }
 
-.try-window {
+.try-window, .app, .editor, .editors, .controls, .editor-container, .display, iframe, .quick-bar {
     position: absolute;
     top: 0;
     left: 0;
+    bottom: 0;
+    right: 0;
     width: 100%;
     height: 100%;
+}
 
-    background: red;
+.error {
+    padding: 1em;
+    color: #FFAFAF;
+    position: absolute;
+    top: 3em;
+    width: 400px;
+    transition: right 200ms;
+    right: -400px;
+    background: #EC3B3B;
+
+    z-index: 20;
+
+    &.shown {
+        right: 0px;
+    }
+}
+
+.error-title {
+    color: white;
+    font-weight: bold;
+    margin-bottom: 0.1em;
+}
+
+.error-line {
+    font-size: 0.8em;
+    font-weight: bold;
+    margin-bottom: 1em;
+}
+
+.controls {
+    height: 100%;
+    width: $side-bar-size;
+    background: $side-bar-color;
+
+    a {
+        line-height: 1em;
+        cursor: pointer;
+        display: block;
+        width: 100%;
+        padding: 1em 0;
+        color: white;
+        text-align: center;
+        border-left: 4px solid $side-bar-color;
+        
+
+        &:hover {
+            $lighter: lighten($side-bar-color, 10%);
+            background: $lighter;
+            border-left: 4px solid $lighter;
+        }
+
+        &.active-link {
+            border-left: 4px solid #edb438;
+            // background: darken($side-bar-color, 5%);
+            background: #2F3129;     
+        }
+
+        &.compile-link {
+            $color: #80BA36;
+
+            margin-bottom: 2em;
+
+            border-left: 4px solid $color;
+            background: $color;
+
+            &:hover {
+                $lighter: lighten($color, 10%);
+                background: $lighter;
+                border-left: 4px solid $lighter;
+            }
+        }
+    }
+}
+
+.quick-bar {
+    left: $side-bar-size;
+    width: calc(50% - #{$side-bar-size});
+    height: $top-bar-size;
+    background: #2F3129;
+
+    select {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        right: 1em;
+        height: 2em;
+
+        border: 0;
+        background: #101010;
+        padding: 0 1em;
+        outline: 0;
+        color: #8A8A8A;
+    }
+
+    option {
+        color: #BABABA;
+        padding: 1em;
+
+        &:hover {
+            background: red;
+        }
+    }
+}
+
+.editors {
+    top: $top-bar-size;
+    height: calc(100% - #{$top-bar-size});
+    left: $side-bar-size;
+    width: calc(50% - #{$side-bar-size});
+}
+
+.editor-container {
+    &.hidden {
+        display: none;
+    }
+}
+
+.editor {
+    font-size: 1.2em;
+}
+
+.display, iframe {
+    left: 50%;
+    width: 50%;
+    background: #EEEEEE;
+    color: #2F3129;
+
+    overflow-y: scroll;
+
+    .sentence {
+        padding: 0.3em 0 0.3em 1em;
+        border-bottom: 1px solid darken(#eee, 5%);
+        width: 100%;
+        overflow: auto;
+
+        transition: all 200ms;
+
+        &:hover {
+            color: #eee;
+            background: #333;
+        }
+
+        .num, .sen {
+            display: block;
+            float: left;
+        }
+
+        .num {
+            width: 4em;
+            padding: 0 0.5em 0;
+            font-size: 0.8em;
+            vertical-align: middle;
+            color: #666;
+        }
+
+        .sen {
+            left: 4em;
+            width: calc(100% - 4em);
+        }
+    }
+}
+
+iframe {
+    border: 0;
+    outline: 0;
+}
+
+.show-more-button {
+    display: inline-block;
+    font-size: 0.8em;
+    padding: 0.7em 1.4em;
+    margin: 2em auto 3em 2em;
+    cursor: pointer;
+
+    &:hover {
+        background: darken(#eee, 5%);
+    }
 }
