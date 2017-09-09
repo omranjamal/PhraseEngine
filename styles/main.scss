@@ -140,7 +140,7 @@ body, html {
         color: white;
 
         &:hover {
-            background-color: #3799FF;
+            background-color: darken($main-color, 10%);
         }
 
         &.btn-ghost {
@@ -150,7 +150,7 @@ body, html {
 
             &:hover {
                 background: transparent;
-                border-color: #3799FF;
+                border-color: darken($main-color, 10%);
             }    
         }
 
