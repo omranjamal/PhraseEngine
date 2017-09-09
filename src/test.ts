@@ -5,22 +5,25 @@ let engine: PhraseEngine;
 try {
     engine = PhraseEngine.compile(`
         <sentence>
-            <text>I love</text>
-            <text> </text>
-            <text> </text>
-            <potato></potato>
-            <br/>
-            Shaira
+            My
+            <select key="pet_type">
+                <for value="canine">dog</for>
+                <for value="feline">cat</for>
+                <default>pet</default>
+            </select>
+            <maybe>really</maybe>
+            likes Trains.
         </sentence>
     `);
 } catch (e) {
     console.log(e.message, e.line());
 }
 
-const dat =  {
+const dat = {
+    pet_type: "feline"
 };
 
 // console.log(JSON.stringify(engine.vars(), null, 4));
 // console.log(engine.count(dat));
-// console.log([...engine.iterate(dat)]);
+console.log([...engine.iterate(dat)]);
 // console.log([...engine.iterate(dat)].length);
