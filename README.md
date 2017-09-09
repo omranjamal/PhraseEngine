@@ -1,11 +1,20 @@
 # Phrase Engine
-UIs that say the same thing over and over again every time are just not fun and writing a few thousand sentences must suck. That leaves us with an AI that enslaves us all or **PhraseEngine**. Welcome to PhraseEngine's docs.
+UIs that say the same thing over and over again every time are just not fun and writing a few thousand sentences must suck. That leaves us with an AI that enslaves us all or **PhraseEngine**.
+
+Welcome to PhraseEngine's docs.
+
+You can try it online: [Try Online](http://hedronium.github.io/PhraseEngine/try.htm?GHREADME)
+Or, read the docs in a nicer way: [Nice Docs]((http://hedronium.github.io/PhraseEngine/?GHREADME)
 
 ## Installation
 ```bash
 yarn add phrase-engine
 ```
-that's it, you're ready to go.
+Or if you're not using yarn (which you should be, it's awesome):
+```bash
+npm install phrase-engine --save
+```
+That's it. You're ready to go. 
 
 ## Getting Started
 Let's compile a Phase file and generate exactly one sentence.
@@ -33,10 +42,11 @@ Okay, now let's do two sentences.
 
 ```Javascript
 console.log(engine.random());
-
-// Output is either
-// "I like trains."
-// "I really like trains."
+```
+the output will be either one of the folloing sentences.
+```
+I like trains.
+I really like trains.
 ```
 
 ## Nesting
@@ -67,19 +77,18 @@ for (let sentence of engine.iterate()) {
 	console.log(sentence);
 }
 ```
+Outpuit:
+```
+I like Trains.
+I really like Trains.
+I really do like Trains.
+```
 
 `.iterate()` returns a generator in order to be efficient. In order to convert
 it into an array you could use ES6 syntax like...
 
 ```JS
 let array_of_sens = [...engine.iterate()];
-```
-
-Outpuit:
-```
-I like Trains.
-I really like Trains.
-I really do like Trains.
 ```
 
 ## &lt;either/&gt;
@@ -522,7 +531,7 @@ Consider these two sentences:
 ### IDs
 It can act on IDs if a certain Id has been rendered. It evaluated to true. For example if the ID is `tomato` then `#tomato` in `<if/>` condition translates to `true`
 
-```
+```XML
 <sentence>
     <either>
         <this id="they">They</this>
@@ -548,7 +557,7 @@ MAGIC.
 ### Classes
 Classes work the same way but the condition variable has to be prefixed with `.` like `.fruit`. For example if the class is `tomato` then `.tomato` in `<if/>` condition translates to `true`
 
-```
+```XML
 <sentence>
     <either>
         <this class="singular">They</this>
@@ -594,4 +603,30 @@ Okay writing a large block of if conditions suck. How about something like a `sw
 ```
 My cat really likes Trains.
 My cat likes Trains.
+```
+
+default example:
+
+```JS
+{
+	pet_type: "bovine"
+}
+```
+```
+My pet really likes Trains.
+My pet likes Trains.
+```
+
+## &lt;br/&gt;
+Every needs line breaks.
+
+```XML
+<sentence>
+    My Trains <br> Hurt.
+</sentence>
+```
+output:
+```
+My Trains
+Hurt
 ```
