@@ -4,7 +4,7 @@ UIs that say the same thing over and over again every time are just not fun and 
 Welcome to PhraseEngine's docs.
 
 You can try it online: [Try Online](http://hedronium.github.io/PhraseEngine/try.htm?GHREADME)
-Or, read the docs in a nicer way: [Nice Docs]((http://hedronium.github.io/PhraseEngine/?GHREADME)
+Or, read the docs in a nicer way: [Nice Docs](http://hedronium.github.io/PhraseEngine/?GHREADME)
 
 ## Installation
 ```bash
