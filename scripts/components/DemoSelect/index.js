@@ -16,7 +16,9 @@ export default class DemoSelect extends React.Component {
     render() {
         return <select onChange={(e) => { this.didChange(e) }} value={this.props.val}>
             <option value="custom">Custom</option>
-            {Object.keys(DemoData).map(key => {
+            {Object.keys(DemoData).sort((a, b) => {
+                return parseInt(a.split('-')[0]) - parseInt(b.split('-')[0]);
+            }).map(key => {
                 return <option value={key}>{key}</option>
             })}
         </select>;

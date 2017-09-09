@@ -2578,9 +2578,9 @@ performance-now@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-0.2.0.tgz#33ef30c5c77d4ea21c5a53869d91b56d8f2555e5"
 
-phrase-engine@^0.1.15:
-  version "0.1.15"
-  resolved "https://registry.yarnpkg.com/phrase-engine/-/phrase-engine-0.1.15.tgz#963ee497e712014ceeacd30cf53816bebc2b728f"
+phrase-engine@^0.1.16:
+  version "0.1.16"
+  resolved "https://registry.yarnpkg.com/phrase-engine/-/phrase-engine-0.1.16.tgz#f43f30d8d6421a55a767c55b4eb76bcfdd2a03ea"
   dependencies:
     xmldom "^0.1.27"
 

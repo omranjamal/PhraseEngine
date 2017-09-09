@@ -27,7 +27,7 @@ export class App extends React.Component {
     iteratorSet(engine) {
         const dat = {
             iter: engine.iterate(this.state.data),
-            count: engine.count()
+            count: engine.count(this.state.data)
         };
 
         this.setState(dat);
