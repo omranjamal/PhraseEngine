@@ -1,0 +1,24 @@
+{
+  "name": "sass-lattice",
+  "description": "Just another (highly customizable) grid system written in SASS.",
+  "main": "Lattice.scss",
+  "authors": [
+    "Omran Jamal <o.jamal97@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "grid",
+    "system",
+    "sass",
+    "scss",
+    "mixins"
+  ],
+  "homepage": "https://github.com/Hedronium/SassLattice",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

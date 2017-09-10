@@ -1,0 +1,23 @@
+{
+  "name": "sass-lattice",
+  "version": "1.0.0",
+  "description": "Just another (highly customizable) grid system written in SASS.",
+  "main": "Lattice.scss",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hedronium/SassLattice.git"
+  },
+  "keywords": [
+    "grid",
+    "system",
+    "sass",
+    "scss",
+    "mixins"
+  ],
+  "author": "Omran Jamal <o.jamal97@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Hedronium/SassLattice/issues"
+  },
+  "homepage": "https://github.com/Hedronium/SassLattice#readme"
+}
