@@ -21,11 +21,9 @@ module.exports = {
             {
                 test: /\.js$/,
                 loader: 'babel-loader',
-                exclude: [
-                    path.resolve(__dirname, "node_modules")
-                ],
                 include: [
-                    path.resolve(__dirname, "scripts")
+                    path.resolve(__dirname, "scripts"),
+                    path.resolve(__dirname, "node_modules/phrase-engine/dist")
                 ]
             }
         ]
@@ -40,6 +38,6 @@ module.exports = {
                 NODE_ENV: JSON.stringify('production')
             }
         }),
-        // new UglifyJSPlugin()
+        new UglifyJSPlugin()
     ]
 };
