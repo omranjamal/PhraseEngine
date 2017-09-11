@@ -8,6 +8,8 @@
   "keywords": [
     "langauge",
     "DSL",
+    "xml",
+    "conversation",
     "internationalization"
   ],
   "repository": {
@@ -33,5 +35,5 @@
   "scripts": {
     "prepublishOnly": "node ./node_modules/bin/tsc"
   },
-  "version": "0.1.18"
+  "version": "0.1.19"
 }
