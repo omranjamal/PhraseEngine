@@ -182,9 +182,14 @@ body, html {
         }
 
         &.btn-ghost {
+            display: none;
             background: transparent;
             border: 0.5em solid $main-color;
             color: darken(desaturate($main-color, 15%), 20%);
+
+            @include at('medium') {
+                display: flex;
+            }
 
             &:hover {
                 background: transparent;
