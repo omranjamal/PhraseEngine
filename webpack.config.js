@@ -27,20 +27,6 @@ module.exports = {
                 include: [
                     path.resolve(__dirname, "scripts")
                 ]
-            },
-            {
-                test: /\.ts$/,
-                loaders: ['babel-loader', 'ts-loader'],
-                exclude: [
-                    path.resolve(__dirname, "node_modules/phrase-engine/dist")
-                ],
-                include: [
-                    path.resolve(__dirname, "node_modules/phrase-engine/src")
-                ]
-            },
-            {
-                test: /\.css$/,
-                loaders: ['css-loader']
             }
         ]
     },
@@ -49,11 +35,11 @@ module.exports = {
     },
     devtool: 'source-map',
     plugins: [
-        // new webpack.DefinePlugin({
-        //     'process.env': {
-        //         NODE_ENV: JSON.stringify('production')
-        //     }
-        // }),
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify('production')
+            }
+        }),
         // new UglifyJSPlugin()
     ]
 };

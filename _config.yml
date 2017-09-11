@@ -45,3 +45,6 @@ exclude:
   - webpack.config.js
   - yarn.lock
   - tsconfig.json
+
+sass:
+  style: compressed

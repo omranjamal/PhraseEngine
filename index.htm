@@ -1,0 +1,139 @@
+---
+title: PhraseEngine - Language files on steroids.
+layout: main
+---
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/dracula.min.css">
+
+<link rel="stylesheet" href="./styles/main.css" />
+<section class="welcome">
+    <div class="welcome-content">
+        <div class="welcome-row">
+            <div class="welcome-logo">
+                <img src="./images/logo.jpg" alt="PhraseEngine Logo"/>
+            </div>
+            <div class="welcome-divider">&nbsp;</div>
+            <div class="welcome-tagline">
+                <span>
+                    <strong>Language files</strong> on steroids
+                    for <strong>UIs</strong> that aren’t boring.
+                </span>
+            </div>
+        </div>
+        <div class="welcome-row">
+            <a href="https://www.github.com/Hedronium/PhraseEngine" class="btn btn-normal">
+                <span class="btn-main-text" style="font-size: 2.5em;">
+                    <i class="fa fa-github"></i>
+                </span>
+                <span class="btn-sub-text" style="margin-right: 1em;">Check Us Out.</span>
+            </a>
+            <a href="./try.htm" class="btn btn-ghost">
+                <span class="btn-main-text">Try It</span>
+                <span class="btn-sub-text">In your browser.<br>Right now.</span>
+            </a>
+        </div>
+        <div class="welcome-row">
+            <div class="welcome-docs-pointer">
+                <span>Docs</span>
+                <i class="fa fa-arrow-down"></i>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="docs">
+    <aside class="docs-index">
+        <ul>
+            <li><a href="">Installation</a></li>
+            <li><a href="">Getting Started</a></li>
+            <li><a href="">Nesting</a></li>
+            <li><a href="">Generating</a></li>
+            <li class="has-sub">
+                <a href="">Tags</a>
+                <ul>
+                    <li><a href="">&lt;maybe/&gt;</a></li>
+                    <li><a href="">&lt;either/&gt;</a></li>
+                    <li><a href="">&lt;text/&gt;</a></li>
+                    <li><a href="">&lt;spaceless/&gt;</a></li>
+                    <li><a href="">&lt;ref/&gt;</a></li>
+                    <li class="has-sub">
+                        <a href="">&lt;data/&gt;</a>
+                        <ul>
+                            <li><a href="">&lt;data/&gt; with fallbacks</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-sub">
+                        <a href="">&lt;if/&gt;</a>
+                        <ul>
+                            <li><a href="">Strings?</a></li>
+                            <li><a href="">What is False?</a></li>
+                            <li><a href="">Implicit &lt;if/&gt;</a></li>
+                            <li class="has-sub">
+                                <a href="">Negating &lt;if/&gt;</a>
+                                <ul>
+                                    <li><a href="">NOT Operator</a></li>
+                                    <li><a href="">&lt;else/&gt; only</a></li>
+                                    <li><a href="">&lt;unless/&gt; tag</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="">Compound Conditions</a></li>
+                            <li><a href="">Internal State Conditions</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="">&lt;select/&gt;</a></li>
+                    <li><a href="">&lt;br/&gt;</a></li>
+                    <li class="has-sub">
+                        <a href="">Misc</a>
+                        <ul>
+                            <li><a href="">List Variables</a></li>
+                            <li><a href="">Count Paths</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="">Why?</a></li>
+                    <li><a href="">License</a></li>
+                </ul>
+            </li>
+        </ul>
+    </aside>
+    <article class="docs-content">
+        {% capture doc %}{% include_relative README.md %}{% endcapture %}
+        {{ doc | markdownify }}
+    </article>
+</section>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/typescript.min.js"></script>
+<script>
+    hljs.configure({
+        // useBR: true
+    });
+
+    $(function () {
+        $('pre > code').each(function (i, block) {
+            var classname = $(block).attr('class');
+
+            if (!classname) {
+                return;
+            }
+
+            var language = classname.split('-')[1];
+            $(block).addClass(language.toLowerCase());
+            hljs.highlightBlock(block);
+        });
+
+        $('a[href*="#"]:not([href="#"])').click(function() {
+            if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+                var target = $(this.hash);
+                target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+            if (target.length) {
+                $('html, body').animate({
+                    scrollTop: target.offset().top
+                }, 500);
+                return false;
+            }
+            }
+        });
+    });
+</script>
+
+<script src="./scripts/landing.js"></script>

@@ -21,7 +21,7 @@ body, html {
 
     font-family: Roboto;
 
-    background: $main-color;
+    background: desaturate(darken($main-color, 15%), 10%);
 }
 
 .welcome {
@@ -114,7 +114,12 @@ body, html {
         }
 
         img {
-            width: 90%;
+            width: 100%;
+
+            @include at('medium') {
+                width: 90%;
+            }
+
             max-width: 26em;
         }
     }
@@ -164,6 +169,7 @@ body, html {
         flex-direction: row;
         height: 5em;
         color: white;
+        transition: all 200ms;
 
         width: 18em;
 
@@ -209,6 +215,203 @@ body, html {
         
         span {
             margin: 0.8em 0 0.3em 0;
+        }
+    }
+}
+
+
+.docs {
+    text-shadow: -0.1em 0.1em 0 rgba(0, 0, 0, 0.3);
+    @include container(90%);
+    max-width: 1100px;
+    
+    margin: 10em auto;
+
+    .docs-index {
+        display: none;
+
+        @include at('medium') {
+            display: block;
+            @include span(30%);
+            @include push(70%);
+        }
+
+        & > ul {
+            margin-left: 1em;
+        }
+
+        li.has-sub {
+            position: relative;
+
+            &:before {
+                position: absolute;
+                content: " ";
+                background: rgba(0,0,0,0.1);
+                border-radius: 0.4em;
+                left: 0.5em;
+                top: 1.5em;
+                width: 0.2em;
+                height: calc(100% - 2em);
+            }
+        }
+
+        li {
+            position: relative;
+        }
+
+        li:after {
+            position: absolute;
+            content: " ";
+
+            background: rgba(0,0,0,0.1);
+            border-radius: 0.4em;
+
+            left: -1em;
+            top: 0.70em;
+
+            width: 1em;
+            height: 0.2em;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 1.5em;
+
+            li {
+                margin: 0.2em 0;
+
+                &.has-sub {
+                    margin: 2em 0;
+                }
+            }
+
+            ul {
+                margin-left: 0em;
+            }
+        }
+
+        a {
+            transition: all 200ms;
+            color: #6BFFE6;
+            font-size: 1.2em;
+            text-decoration: none;
+
+            &:hover {
+                color: white;
+            }
+        }
+    }
+
+    .docs-content {
+        @include span(100%);
+
+        @include at('medium') {
+            @include span(70%);
+            @include pull(30%);
+        }
+
+        font-size: 0.9em;
+        color: #C5FFF5;
+
+        @include at('medium') {
+            font-size: 1.2em;
+        }
+
+        h1 {
+            display: none;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            position: relative;
+            text-shadow: -0.1em 0.1em 0 rgba(0, 0, 0, 0.3);
+            color: #FFFFFF;
+
+            @include at('medium') {
+                &::before {
+                    content: "#";
+                    color: #5BBDFF;
+                    position: absolute;
+                    left: -0.8em;
+                    opacity: 0.3;
+                    font-size: 1.5em;
+                    line-height: 0.75em;
+                    vertical-align: middle;
+                }
+            }
+        }
+
+        h2 {
+            margin-top: 3em;
+            font-size: 2.2em;
+        }
+
+        h3 {
+            margin-top: 2em;
+            font-size: 1.8em;
+        }
+
+        h4 {
+            margin-top: 1em;
+            font-size: 1.4em;
+        }
+
+        h5 {
+            margin-top: 1em;
+            font-size: 1.2em;
+        }
+
+        a {
+            text-decoration: none;
+            color: #FFFD9E;
+
+            &:hover {
+                color: #76BDFF;
+            }
+        }
+
+        p {
+            padding: 0 1em;
+        }
+
+        pre {
+            background: #282A36;
+            padding: 1em 1.5em;
+            border-bottom: rgba(0,0,0,0.7) solid 0.3em;
+            border-radius: 0.5em;
+
+            code {
+                font-size: 1.2em;
+            }
+        }
+
+        p > code, h4 > code {
+            background: rgba(255, 222, 123, 0.34);
+            padding: 0.2em 0.4em;
+            color: white;
+            border-radius: 0.3em;
+        }
+
+        blockquote {
+            background: rgba(101, 173, 255, 0.2);
+            margin: 3em 0;
+            padding: 0.1em 1em;
+            border-left: 0.3em solid #41A9FF;
+            color: white;
+        }
+
+        .warn + blockquote {
+            background: rgba(255, 40, 40, 0.62);
+            border-left: 0.3em solid #FF4141;
+        }
+
+        table {
+            width: 100%;
+            margin: 3em 0;
+
+            td {
+                border: 1px solid rgba(255, 255, 255, 0.5);
+                padding: 0.5em;
+            }
         }
     }
 }
