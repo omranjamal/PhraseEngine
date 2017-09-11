@@ -1,8 +1,11 @@
-export class PhraseError extends Error {
+export class PhraseError {
     protected __line_num: number;
+    public message: string;
+    public error: Error;
     
     constructor(message: string) {
-        super(message);
+        this.message = message;
+        this.error = new Error(message);
     }
 
     node(node: Node): PhraseError {
