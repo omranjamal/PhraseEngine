@@ -624,6 +624,10 @@ They love Trains.
 ```
 MAGIC AGAIN.
 
+> A tag can hace multiple classes. Just like HTML
+> it works by space separating the classes like
+> `"food fruit tomato"`
+
 ### &lt;select/&gt;
 Okay writing a large block of if conditions suck. How about something like a `switch/case` statement?
 

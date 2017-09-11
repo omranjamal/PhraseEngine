@@ -43,53 +43,59 @@ layout: main
 <section class="docs">
     <aside class="docs-index">
         <ul>
-            <li><a href="">Installation</a></li>
-            <li><a href="">Getting Started</a></li>
-            <li><a href="">Nesting</a></li>
-            <li><a href="">Generating</a></li>
+            <li><a href="#installation">Installation</a></li>
+            <li><a href="#getting-started">Getting Started</a></li>
+            <li><a href="#nesting">Nesting</a></li>
+            <li><a href="#generating">Generating</a></li>
             <li class="has-sub">
-                <a href="">Tags</a>
+                <a href="#tags">Tags</a>
                 <ul>
-                    <li><a href="">&lt;maybe/&gt;</a></li>
-                    <li><a href="">&lt;either/&gt;</a></li>
-                    <li><a href="">&lt;text/&gt;</a></li>
-                    <li><a href="">&lt;spaceless/&gt;</a></li>
-                    <li><a href="">&lt;ref/&gt;</a></li>
+                    <li><a href="#maybe">&lt;maybe/&gt;</a></li>
+                    <li><a href="#either">&lt;either/&gt;</a></li>
+                    <li><a href="#text">&lt;text/&gt;</a></li>
+                    <li><a href="#spaceless">&lt;spaceless/&gt;</a></li>
+                    <li><a href="#ref">&lt;ref/&gt;</a></li>
                     <li class="has-sub">
-                        <a href="">&lt;data/&gt;</a>
+                        <a href="#data">&lt;data/&gt;</a>
                         <ul>
-                            <li><a href="">&lt;data/&gt; with fallbacks</a></li>
+                            <li><a href="#with-fallbacks">&lt;data/&gt; with fallbacks</a></li>
                         </ul>
                     </li>
                     <li class="has-sub">
-                        <a href="">&lt;if/&gt;</a>
+                        <a href="#if">&lt;if/&gt;</a>
                         <ul>
-                            <li><a href="">Strings?</a></li>
-                            <li><a href="">What is False?</a></li>
-                            <li><a href="">Implicit &lt;if/&gt;</a></li>
+                            <li><a href="#strings">Strings?</a></li>
+                            <li><a href="#what-is-false">What is False?</a></li>
+                            <li><a href="#implicit-if">Implicit &lt;if/&gt;</a></li>
                             <li class="has-sub">
-                                <a href="">Negating &lt;if/&gt;</a>
+                                <a href="#negating-if">Negating &lt;if/&gt;</a>
                                 <ul>
-                                    <li><a href="">NOT Operator</a></li>
-                                    <li><a href="">&lt;else/&gt; only</a></li>
-                                    <li><a href="">&lt;unless/&gt; tag</a></li>
+                                    <li><a href="#not-operator">NOT Operator</a></li>
+                                    <li><a href="#else-only">&lt;else/&gt; only</a></li>
+                                    <li><a href="#unless-tag">&lt;unless/&gt; tag</a></li>
                                 </ul>
                             </li>
-                            <li><a href="">Compound Conditions</a></li>
-                            <li><a href="">Internal State Conditions</a></li>
+                            <li><a href="#compound-conditions">Compound Conditions</a></li>
+                            <li class="has-sub">
+                                <a href="#internal-state-conditions">Internal State Conditions</a>
+                                <ul>
+                                    <li><a href="#ids">IDs</a></li>
+                                    <li><a href="#classes">Classes</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
-                    <li><a href="">&lt;select/&gt;</a></li>
-                    <li><a href="">&lt;br/&gt;</a></li>
+                    <li><a href="#select">&lt;select/&gt;</a></li>
+                    <li><a href="#br">&lt;br/&gt;</a></li>
                     <li class="has-sub">
-                        <a href="">Misc</a>
+                        <a href="#misc">Misc</a>
                         <ul>
-                            <li><a href="">List Variables</a></li>
-                            <li><a href="">Count Paths</a></li>
+                            <li><a href="#list-variables">List Variables</a></li>
+                            <li><a href="#count-paths">Count Paths</a></li>
                         </ul>
                     </li>
-                    <li><a href="">Why?</a></li>
-                    <li><a href="">License</a></li>
+                    <li><a href="#why">Why?</a></li>
+                    <li><a href="#license">License</a></li>
                 </ul>
             </li>
         </ul>
@@ -127,8 +133,8 @@ layout: main
                 target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
             if (target.length) {
                 $('html, body').animate({
-                    scrollTop: target.offset().top
-                }, 500);
+                    scrollTop: target.offset().top - 30
+                }, 200);
                 return false;
             }
             }
