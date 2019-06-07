@@ -19,7 +19,7 @@ export class SentenceNode extends PhraseNode {
                 return;
             }
 
-            if (root.hasAttributes() && (<Element>root).hasAttribute('id')) {
+            if ((<Element>root).hasAttributes() && (<Element>root).hasAttribute('id')) {
                 const id = (<Element>root).getAttribute('id');
 
                 if (id in id_node_map) {

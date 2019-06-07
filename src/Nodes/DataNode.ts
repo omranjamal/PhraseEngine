@@ -27,12 +27,21 @@ export class DataNode extends RefableNode {
 
         this.__evaulator = (eval_pack: EvalPacketInterface) => {
             let key = check_arr.find(key => key in eval_pack.data)
-            
+            let data = null;
+
             if (key === undefined) {
-                throw new Error(`No data for keys "${check_arr.join(', ')}"`);
+                if ((<Element>root).hasAttribute('default')) {
+                    data = (<Element>root).getAttribute('default');
+                } else {
+                    let err = new PhraseError(`No data found for <data /> and no 'default' attribute defined.`);
+                    err.node(root);
+                    throw err;
+                }
+            } else {
+                data = eval_pack.data[key];
             }
 
-            return eval_pack.data[key];
+            return data;
         };
 
         this.setNextNode(peek(packet.next_stack));

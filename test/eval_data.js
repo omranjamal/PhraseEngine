@@ -63,8 +63,23 @@ describe('EVAL: data', function () {
             is.equal(li[0], 'YYY');
         });
 
+        it('shuold use default if data not available but default is', function () {
+            let engine = en.compile(`
+                    <sentence>
+                        <data key="x|y" default="TOMATO" />
+                    </sentence>
+                `);
 
-        it('should throw if data isn\'t found', function () {
+            engine.vars();
+            engine.count({});
+
+            let li = [...engine.iterate({})];
+
+            is.equal(li[0], 'TOMATO');
+        });
+
+
+        it('should throw if data isn\'t found and no default', function () {
             let engine = en.compile(`
                     <sentence>
                         <data key="x|y" />
