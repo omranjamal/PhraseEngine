@@ -38,6 +38,11 @@ export class SentenceNode extends PhraseNode {
             for (let i = 0; i < length; i++) {
                 indexIds(root.childNodes.item(i));
             }
+
+            // Remove Inert Nodes
+            if (root.nodeName === 'inert') {
+                root.parentNode.removeChild(root);
+            }
         };
 
         indexIds(root);
