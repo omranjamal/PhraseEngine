@@ -10,6 +10,7 @@ export default mapFilter(factories, [
     'either',
     'select',
     'spaceless',
+    'spaceful',
     'unless',
     'data',
     '#text',

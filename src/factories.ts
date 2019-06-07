@@ -10,6 +10,7 @@ import { ElseNode } from './Nodes/ElseNode';
 import { OrNode } from './Nodes/OrNode';
 import { DataNode } from './Nodes/DataNode';
 import { SpacelessNode } from './Nodes/SpacelessNode';
+import { SpacefulNode } from './Nodes/SpacefulNode';
 import { RawTextNode } from './Nodes/RawTextNode';
 import { SpaceNode } from './Nodes/SpaceNode';
 import { RefNode } from './Nodes/RefNode';
@@ -45,6 +46,9 @@ export default {
     },
     "spaceless": (root: Node, packet: InitPacketInterface) => {
         return new SpacelessNode(root, packet);
+    },
+    "spaceful": (root: Node, packet: InitPacketInterface) => {
+        return new SpacefulNode(root, packet);
     },
     "unless": (root: Node, packet: InitPacketInterface) => {
         return new UnlessNode(root, packet);
