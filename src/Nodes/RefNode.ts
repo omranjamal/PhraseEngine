@@ -17,6 +17,7 @@ export class RefNode extends PhraseNode {
             'either',
             'select',
             'spaceless',
+            'spaceful',
             'unless',
             'data'
         ]);

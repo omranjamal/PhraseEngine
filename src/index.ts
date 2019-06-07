@@ -2,6 +2,7 @@ import Browser from './browser';
 import { SentenceNode } from "./Nodes/SentenceNode";
 import { DOMParser as DP } from 'xmldom';
 import makeTerminus from './makeTerminus';
+import purgeCommentNodes from './purgeCommentNodes';
 
 export default class PhraseEngine extends Browser {
     public static getDOMParser(): { new(): DP } {
@@ -9,9 +10,13 @@ export default class PhraseEngine extends Browser {
     }
 
     public static compile(xml: string): PhraseEngine {
+        const root = (new (this.getDOMParser())).parseFromString(xml, 'text/xml').documentElement;
+
+        purgeCommentNodes(root);
+
         return new PhraseEngine(
             new SentenceNode(
-                (new (this.getDOMParser())).parseFromString(xml, 'text/xml').documentElement,
+                root,
                 {
                     ignore_spaces: [false],
                     next_stack: [makeTerminus()],

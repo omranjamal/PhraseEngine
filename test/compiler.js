@@ -21,6 +21,19 @@ describe('Compiler', function () {
             });
         });
 
+        it('should accept comment nodes', function () {
+            is.doesNotThrow(() => {
+                en.compile(`
+                    <sentence>
+                        <!-- TOMATO -->
+                        <text>Tomato</text>
+                        <!-- Potato -->
+                        Potato
+                    </sentence>
+                `);
+            });
+        });
+
         it('should accept sentence with one text', function () {
             is.doesNotThrow(() => {
                 en.compile(`<sentence>hello</sentence>`);
