@@ -12,6 +12,7 @@ export class SelectNode extends RefableNode {
 
     protected __default: PhraseNode;
     protected __key: string;
+    protected __silent: boolean;
 
     protected validateNodeName(name: string): boolean {
         return name === 'select';
@@ -23,6 +24,8 @@ export class SelectNode extends RefableNode {
             err.node(root);
             throw err;
         }
+
+        this.__silent = (<Element>root).hasAttribute('silent');
 
         this.__key = (<Element>root).getAttribute('key');
 
@@ -94,12 +97,16 @@ export class SelectNode extends RefableNode {
 
     public eval(packet: EvalPacketInterface, branch?: number): EvalPacketInterface {
         this.registerRender(packet);
+
+        let val = null;
         
         if (!(this.__key in packet.data)) {
-            throw new Error(`key "${this.__key}" not found in data.`);
+            if (!this.__silent) {
+                throw new Error(`key "${this.__key}" not found in data.`);
+            }
+        } else {
+            val = packet.data[this.__key];
         }
-
-        const val = packet.data[this.__key];
 
         if (val in this.__map) {
             return this.__map[val].eval(packet);
